@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="bonito.css">
 </head>
 <body>
-    >
-    
+    <div id="cabecalho" class="containerfluid">
+        <div class="containertop">
+            <img class="logoNovo" src="imagens/logoNovo.png" alt ="Logo ExpeRT" >
+        </div>
+        <button id="toggle-tema" class="Tema" onclick="ativar()">Muda a cor </button>    
+    </div>
+        
+
     <button class="botao-js" onmouseover="expandir()" onmouseout="recolher()">
         <span class="texto-principal">Passe o mouse</span>
         <div class="conteudo-js" style="display: none;">
@@ -21,4 +27,17 @@
 <footer>
 
 </footer>
+
+<script>
+    // muda a cor de fundo sendo branco a padrao e preto quando clicado
+    const botaoTema = document.getElementById('toggle-tema');
+    botaoTema.addEventListener('click', () => {
+        const body = document.body;
+        if (body.getAttribute('data-tema') === 'escuro') {
+            body.removeAttribute('data-tema');
+        } else {
+            body.setAttribute('data-tema', 'escuro');
+        }
+    });
+</script>
 </html>

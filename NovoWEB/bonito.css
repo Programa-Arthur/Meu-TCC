@@ -1,7 +1,20 @@
+:root {
+    --cor-botao: #111c81;
+    --cor-botao-texto: #fff;
+    --cor-fundo: #000000; /* escuro por padrão */
+    --logo-largura: 100px;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    padding-top: 60px; /* ajuste conforme a altura do cabeçalho */
+}
+
+/*botao interativo*/
 button.botao-js {
-    background-color: #4CAF50; /* Green */
+    background-color: var(--cor-botao);
     border: none;
-    color: white;
+    color: var(--cor-botao-texto);
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -9,4 +22,32 @@ button.botao-js {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+/*bota de mudar cor do tema*/
+button.Tema{
+    position: absolute;
+    top: 30px;
+    right: 10px;
+}
+
+/*cor da dive do cabesario*/
+div#cabecalho {
+    background-color: var(--cor-botao);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+img.logoNovo {
+    width: var(--logo-largura);
+    height: auto;
+}
+
+[data-tema="escuro"] {
+    --cor-fundo: #ffffff;
+    --cor-botao: #111c81;
+    --cor-botao-texto: #fff;
 }
