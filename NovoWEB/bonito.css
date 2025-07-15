@@ -18,10 +18,14 @@ button.botao-js {
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block; /* Faz cada botão ocupar uma linha */
     font-size: 16px;
     margin: 4px 2px;
+    margin-bottom: 20px; /* Espaço entre os botões */
     cursor: pointer;
+    width: 200px;
+    height: 50px;
+    transition: height 0.3s ease;
 }
 
 /*bota de mudar cor do tema*/
@@ -50,4 +54,29 @@ img.logoNovo {
     --cor-fundo: #ffffff;
     --cor-botao: #111c81;
     --cor-botao-texto: #fff;
+}
+/*transisao dos botoes*/
+button#botao1{
+    height: 50px;
+    width: 200px;
+    transition: height 0.3s ease;
+}
+
+button#botao2{
+    height: 50px;
+    width: 200px;
+    transition: height 0.3s ease;
+}
+button#botao3{
+    height: 50px;
+    width: 200px;
+    transition: height 0.3s ease;
+}
+button#botao4{
+    height: 50px;
+    width: 200px;
+    transition: height 0.3s ease;
+    position: static;
+    top: unset;
+    right: unset;
 }

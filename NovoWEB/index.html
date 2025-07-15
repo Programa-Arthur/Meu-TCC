@@ -6,28 +6,59 @@
     <title>ExpeRT | plataforma</title>
     <script src="ativa.js"></script>
     <link rel="stylesheet" href="bonito.css">
+    <style>
+      .botao-arredondado {
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .botao-arredondado:hover {
+        background-color: #45a049;
+      }
+    </style>
 </head>
 <body>
     <div id="cabecalho" class="containerfluid">
         <div class="containertop">
             <img class="logoNovo" src="imagens/logoNovo.png" alt ="Logo ExpeRT" >
         </div>
-        <button id="toggle-tema" class="Tema" onclick="ativar()">Muda a cor </button>    
+        <button id="toggle-tema" class="Tema">Muda a cor </button>    
     </div>
         
-
-    <button class="botao-js" onmouseover="expandir()" onmouseout="recolher()">
+    <button id="botao1" class="botao-js botao-arredondado">
         <span class="texto-principal">Passe o mouse</span>
         <div class="conteudo-js" style="display: none;">
             Conteúdo escondido com JS!
         </div>
     </button>
 
+    <button id="botao2" class="botao-js botao-arredondado">
+        <span class="texto-principal">Passe o mouse</span>
+        <div class="conteudo-js" style="display: none;">
+            Conteúdo escondido com JS!
+        </div>
+    </button>
+
+    <button id="botao3" class="botao-js botao-arredondado">
+        <span class="texto-principal">Passe o mouse</span>
+        <div class="conteudo-js" style="display: none;">
+            Conteúdo escondido com JS!
+        </div>
+    </button>
+
+    <button id="botao4" class="botao-js botao-arredondado">
+        <span class="texto-principal">Passe o mouse</span>
+        <div class="conteudo-js" style="display: none;">
+            Conteúdo escondido com JS!
+        </div>
+    </button>
+    <footer>
+    </footer>
 </body>
-<footer>
-
-</footer>
-
+<!-- muda o tema para escuro/claro -->
 <script>
     // muda a cor de fundo sendo branco a padrao e preto quando clicado
     const botaoTema = document.getElementById('toggle-tema');
