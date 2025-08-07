@@ -2,12 +2,30 @@
     --cor-botao: #111c81;
     --cor-botao-texto: #fff;
     --cor-fundo: #000000; /* escuro por padrão */
+    --cor-texto: #fff;    /* texto claro por padrão */
     --logo-largura: 100px;
+    --cor-pescoco: #113e81; /* verde */
 }
 
 body {
     background-color: var(--cor-fundo);
+    color: var(--cor-texto);
     padding-top: 60px; /* ajuste conforme a altura do cabeçalho */
+}
+
+body[data-tema="escuro"] {
+    --cor-fundo: #f3f3f3;
+    --cor-texto: #000000;
+}
+
+body[data-tema="claro"] {
+    --cor-fundo: #fff;
+    --cor-texto: #222;
+}s
+
+/* Aplica cor oposta nos <p> */
+p {
+    color: var(--cor-texto);
 }
 
 /*botao interativo*/
@@ -50,33 +68,49 @@ img.logoNovo {
     height: auto;
 }
 
-[data-tema="escuro"] {
-    --cor-fundo: #ffffff;
-    --cor-botao: #111c81;
-    --cor-botao-texto: #fff;
+div#pescoco {
+    position: relative;
+    display: block;
+    width: 100%; /* cobre toda a largura */
+    height: 100px;
+    background-color: var(--cor-pescoco);
 }
+
 /*transisao dos botoes*/
 button#botao1{
+    display: block;
+    margin-left: auto;
+    margin-right: 70%;
     height: 50px;
     width: 200px;
     transition: height 0.3s ease;
 }
 
 button#botao2{
+    display: block;
+    margin-left: auto;
+    margin-right: 70%;
     height: 50px;
     width: 200px;
     transition: height 0.3s ease;
 }
+
 button#botao3{
+   display: block;
+    margin-top: -140px;
+    margin-left: auto;
+    margin-right: 25%; 
     height: 50px;
     width: 200px;
     transition: height 0.3s ease;
 }
+
 button#botao4{
+    display: block;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: 25%;
     height: 50px;
     width: 200px;
     transition: height 0.3s ease;
-    position: static;
-    top: unset;
-    right: unset;
 }
