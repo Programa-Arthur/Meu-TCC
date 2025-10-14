@@ -1,0 +1,13 @@
+.btn-animado {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    background: #444;
+    color: #fff;
+    transition: transform 0.2s, background 0.2s;
+    cursor: pointer;
+}
+.btn-animado:hover {
+    transform: scale(1.08);
+    background: #666;
+}
