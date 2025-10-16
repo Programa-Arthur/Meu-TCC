@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Meu TCC - Header editável</title>
+	<link rel="stylesheet" href="TCC/lindo.css">
+</head>
+<body>
+	<!-- header com logo que pode ser trocada -->
+	<header>
+		<img id="logoImg" class="logo" src="" alt="Logo do site">
+		<div class="image-controls">
+			<label>
+				Selecionar arquivo:
+				<input id="fileInput" type="file" accept="image/*">
+			</label>
+			<label>
+				Ou colar URL da imagem:
+				<input id="urlInput" type="url" placeholder="https://exemplo.com/logo.png">
+			</label>
+			<div>
+				<button id="applyUrl" class="btn-animado pequeno">Aplicar URL</button>
+				<button id="resetBtn" class="btn-animado pequeno">Remover</button>
+			</div>
+			<p id="msg" aria-live="polite"></p>
+		</div>
+	</header>
+
+	<main>
+		<button id="meuBotao" class="btn-animado">Clique aqui</button>
+		<p id="resultado"></p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

@@ -1,3 +1,58 @@
+/* Definições de fonte e renderização para evitar "letras estranhas" */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: normal;
+    background-color: #001264;
+    padding-top: var(--site-header-height);
+}
+
+/* Header removido do inline-style -> class dedicada */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--site-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 20px;
+    background: #3e57c7;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/*arrumando os comandos do topo de comando*/
+
+
+
+/* Garantir que a logo use a classe .logo e seja responsiva */
+header img.logo {
+    width: 150px;
+    max-width: 40%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* Ajustes para títulos e botões para melhor leitura */
+h1, h2 {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
 .btn-animado {
     padding: 10px 30px;
     border: none;
@@ -6,8 +61,81 @@
     color: #fff;
     transition: transform 0.2s, background 0.2s;
     cursor: pointer;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .btn-animado:hover {
     transform: scale(1.08);
     background: #666;
+}
+/* Adições para integração com index.html/script.js */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* estado alternado quando o JS adiciona/remova a classe */
+.btn-animado.ativo {
+    transform: scale(1.03);
+    background: #333;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+}
+
+/* Tornar a logo responsiva e centrada; use src do <img> para trocar a imagem */
+header img.logo {
+    width: 150px;
+    max-width: 40%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* controles de imagem (input) */
+.image-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+}
+
+/* botão de ação (opcional) */
+.btn-animado.pequeno {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+/* novo: altura fixa do header e espaço no topo para o conteúdo */
+:root {
+    --site-header-height: 90px; /* ajuste esse valor se quiser o header maior/menor */
+}
+
+/* layout dos botões: duas colunas; coluna empilha seus botões */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* espaço entre colunas */
+    align-items: flex-start;
+}
+
+/* cada coluna empilha os botões verticalmente */
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* espaço entre botões dentro da coluna */
+    align-items: center;
+}
+
+/* opcional: ajustar largura dos botões para ficar uniforme */
+.col .btn-animado {
+    min-width: 160px;
 }
