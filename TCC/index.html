@@ -8,27 +8,30 @@
 </head>
 <body>
     <header class="site-header">
-        <img id="logo2" class="logo" src="imagens/logo2.png" alt="Logo da Plataforma Expert">
-        
-        <h5>usar dispositivos</h5> 
-        <h5>tutoriais</h5> 
-        <h5> sobre nós</h5>
-
+        <div id="logo-container">
+            <img id="logo2" class="logo" src="imagens/logo2.png" alt="Logo da Plataforma Expert" onclick="window.location.href='index.html'">
+        </div>
+        <div id="header-buttons">
+            <button class="btn-header">Usar dispositivos</button>
+            <button class="btn-header">Tutoriais</button>
+            <button class="btn-header">Sobre nós</button>
+        </div>
     </header>
-    <div style="background: #3e57c7; width: 80%; margin: 40px auto; padding: 30px; border-radius: 10px; color: #fff; text-align: center;">
+    <div id="main-content" style="background: #3e57c7; width: 80%; margin: 40px auto; padding: 30px; border-radius: 10px; color: #fff; text-align: center;">
         <h1>
         </h1>
         <p>Vamo dale</p>
         <div class="buttons-container" style="margin-top:30px;">
             <div class="col">
-                <button class="btn-animado btn-1">Botão 1</button>
-                <button class="btn-animado btn-2">Botão 2</button>
+                <button class="btn-animado btn-1" onclick="window.location.href='feramentas/luminosidade.html'">Luminosidade</button>
+                <button class="btn-animado btn-2" onclick="window.location.href='feramentas/diastancia.html'">Distancia</button>
             </div>
             <div class="col">
-                <button class="btn-animado">Botão 3</button>
-                <button class="btn-animado">Botão 4</button>
+                <button class="btn-animado" onclick="window.location.href='feramentas/temperatura.html'">Temperatura</button>
+                <button class="btn-animado" onclick="window.location.href='feramentas/frequencia.html'">Frequencia</button>
             </div>
         </div>
     </div>
+    <script src="funcao.js"></script>
 </body>
 </html>

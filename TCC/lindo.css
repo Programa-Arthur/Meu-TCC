@@ -36,9 +36,10 @@ body {
 /* Garantir que a logo use a classe .logo e seja responsiva */
 header img.logo {
     width: 150px;
-    max-width: 40%;
+    max-width: none;
     height: auto;
     object-fit: contain;
+    margin-top: -15px;
     margin-bottom: 0;
     border-radius: 6px;
     background: #fff;
@@ -87,19 +88,6 @@ header {
     padding: 16px;
 }
 
-/* Tornar a logo responsiva e centrada; use src do <img> para trocar a imagem */
-header img.logo {
-    width: 150px;
-    max-width: 40%;
-    height: auto;
-    object-fit: contain;
-    margin-bottom: 0;
-    border-radius: 6px;
-    background: #fff;
-    padding: 4px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-}
-
 /* controles de imagem (input) */
 .image-controls {
     display: flex;
@@ -138,4 +126,20 @@ header img.logo {
 /* opcional: ajustar largura dos botões para ficar uniforme */
 .col .btn-animado {
     min-width: 160px;
+}
+
+.btn-header {
+    background: #fff;
+    color: #3e57c7;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 10px 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+.btn-header:hover {
+    background: #3e57c7;
+    color: #fff;
 }
