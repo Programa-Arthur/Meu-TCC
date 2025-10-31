@@ -11,27 +11,26 @@
         <div id="logo-container">
             <img id="logo2" class="logo" src="imagens/logo2.png" alt="Logo da Plataforma Expert" onclick="window.location.href='index.html'">
         </div>
-        <div id="header-buttons">
-            <button class="btn-header">Usar dispositivos</button>
-            <button class="btn-header">Tutoriais</button>
-            <button class="btn-header">Sobre nós</button>
-        </div>
+        <nav id="header-buttons" aria-label="Navegação principal">
+            <button class="btn-header" aria-label="Usar dispositivos">Usar dispositivos</button>
+            <button class="btn-header" aria-label="Tutoriais">Tutoriais</button>
+            <button class="btn-header" aria-label="Sobre nós">Sobre nós</button>
+        </nav>
     </header>
     <div id="main-content" style="background: #3e57c7; width: 80%; margin: 40px auto; padding: 30px; border-radius: 10px; color: #fff; text-align: center;">
-        <h1>
-        </h1>
-        <p>Vamo dale</p>
+        <h1>Bem-vindo à Plataforma Expert</h1>
+        <p>Explore nossas ferramentas para medir luminosidade, distância, temperatura e frequência com facilidade.</p>
         <div class="buttons-container" style="margin-top:30px;">
             <div class="col">
-                <button class="btn-animado btn-1" onclick="window.location.href='feramentas/luminosidade.html'">Luminosidade</button>
-                <button class="btn-animado btn-2" onclick="window.location.href='feramentas/diastancia.html'">Distancia</button>
+                <button class="btn-animado btn-1" onclick="window.location.href='feramentas/luminosidade.html'" aria-label="Abrir ferramenta de luminosidade">Luminosidade</button>
+                <button class="btn-animado btn-2" onclick="window.location.href='feramentas/diastancia.html'" aria-label="Abrir ferramenta de distância">Distancia</button>
             </div>
             <div class="col">
-                <button class="btn-animado" onclick="window.location.href='feramentas/temperatura.html'">Temperatura</button>
-                <button class="btn-animado" onclick="window.location.href='feramentas/frequencia.html'">Frequencia</button>
+                <button class="btn-animado" onclick="window.location.href='feramentas/temperatura.html'" aria-label="Abrir ferramenta de temperatura">Temperatura</button>
+                <button class="btn-animado" onclick="window.location.href='feramentas/frequencia.html'" aria-label="Abrir ferramenta de frequência">Frequencia</button>
             </div>
         </div>
     </div>
-    <script src="funcao.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

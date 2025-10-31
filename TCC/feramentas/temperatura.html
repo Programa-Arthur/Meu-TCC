@@ -2,20 +2,31 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temperatura</title>
+    <link rel="stylesheet" href="../lindo.css">
 </head>
 <body>
     <header class="site-header">
         <div id="logo-container">
-            <img id="logo2" class="logo" src="imagens/logo2.png" alt="Logo da Plataforma Expert" onclick="window.location.href='index.html'">
+            <img id="logo2" class="logo" src="../imagens/logo2.png" alt="Logo da Plataforma Expert" onclick="window.location.href='../index.html'">
         </div>
-        <div id="header-buttons">
-            <button class="btn-header">Usar dispositivos</button>
-            <button class="btn-header">Tutoriais</button>
-            <button class="btn-header">Sobre nós</button>
-        </div>
+        <nav id="header-buttons" aria-label="Navegação principal">
+            <button class="btn-header" aria-label="Usar dispositivos">Usar dispositivos</button>
+            <button class="btn-header" aria-label="Tutoriais">Tutoriais</button>
+            <button class="btn-header" aria-label="Sobre nós">Sobre nós</button>
+        </nav>
     </header>
+
     <div id="main-content" style="background: #3e57c7; width: 80%; margin: 40px auto; padding: 30px; border-radius: 10px; color: #fff; text-align: center;">
-    <!-- Conteúdo da página -->
+        <h1>Temperatura</h1>
+        <p>Monitore a temperatura em °C.</p>
+        <div class="sensor-box">
+            <h2>Valor</h2>
+            <p>Valor atual: <span id="valor-temperatura">—</span></p>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
 </body>
 </html>
