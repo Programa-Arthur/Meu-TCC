@@ -21,7 +21,7 @@ body {
     height: var(--site-header-height);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Alterado para espaçar elementos */
     gap: 16px;
     padding: 0 20px;
     background: #3e57c7;
@@ -39,8 +39,9 @@ header img.logo {
     max-width: none;
     height: auto;
     object-fit: contain;
-    margin-top: -15px;
-    margin-bottom: 0;
+    margin-top: 10px; /* Alterado de -15px para 10px para descer a imagem */
+    margin-bottom: 10px; /* Adicionado para manter equilíbrio */
+    margin-left: 20px; /* Adiciona espaço à esquerda */
     border-radius: 6px;
     background: #fff;
     padding: 4px;
@@ -142,4 +143,16 @@ header {
 .btn-header:hover {
     background: #3e57c7;
     color: #fff;
+}
+
+#logo-container {
+    margin-right: auto;
+    padding-left: 20px; /* Adiciona padding extra no container */
+}
+
+#header-buttons {
+    display: flex;
+    gap: 16px;
+    margin-left: auto;
+    padding-right: 40px; /* Adiciona espaço à direita dos botões */
 }
