@@ -19,11 +19,25 @@
     </header>
 
     <div id="main-content" style="background: #3e57c7; width: 80%; margin: 40px auto; padding: 30px; border-radius: 10px; color: #fff; text-align: center;">
+        <!-- botão de voltar com ícone SVG e texto acessível -->
+        <button id="back-arrow" class="back-arrow" data-action="back" aria-label="Voltar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="visually-hidden">Voltar</span>
+        </button>
+
         <h1>Luminosidade</h1>
         <p>Monitore a luminosidade em tempo real.</p>
         <div class="sensor-box">
             <h2>Valor</h2>
             <p>Valor atual: <span id="valor-luminosidade">—</span></p>
+            <div class="sensor-controls">
+                <button class="btn-animado btn-control" data-sensor="luminosidade" data-action="start" aria-label="Iniciar leitura">Iniciar</button>
+                <button class="btn-animado btn-control" data-sensor="luminosidade" data-action="pause" aria-label="Pausar leitura">Pausar</button>
+                <button class="btn-animado btn-control" data-sensor="luminosidade" data-action="restart" aria-label="Reiniciar leitura">Reiniciar</button>
+                <!-- Voltar agora é a seta fixa -->
+            </div>
         </div>
     </div>
 

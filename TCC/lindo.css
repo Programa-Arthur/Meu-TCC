@@ -156,3 +156,56 @@ header {
     margin-left: auto;
     padding-right: 40px; /* Adiciona espaço à direita dos botões */
 }
+
+/* utilitário para acessibilidade: texto visualmente escondido */
+.visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap; /* evita quebra */
+}
+
+/* tornar #main-content relativo para posicionamento interno do botão */
+#main-content {
+    position: relative;
+}
+
+/* botão de voltar posicionado dentro do main-content no canto superior esquerdo */
+.back-arrow {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff, #f0f4ff);
+    color: #3e57c7;
+    border: 1px solid rgba(62,87,199,0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+    cursor: pointer;
+    z-index: 50;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.back-arrow svg { display: block; }
+
+.back-arrow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(2,6,23,0.45);
+}
+
+.back-arrow:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(62,87,199,0.12);
+}
+
+/* ajuste responsivo */
+@media (max-width: 480px){
+    .back-arrow { width: 40px; height: 40px; top: 12px; left: 12px; }
+}
