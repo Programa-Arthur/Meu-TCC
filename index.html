@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma ExpeRT - Ensino Experimental de Ciências</title>
+  <!-- Link para o arquivo CSS -->
+  <link rel="stylesheet" href="lindo.css">
+</head>
+<body>
+
+  <!-- Cabeçalho Fixo (Header) -->
+  <header class="site-header">
+    <div id="logo-container">
+      <div class="logo-text">ExpeRT <span>Platform</span></div>
+    </div>
+
+    <!-- Navegação e Botões de Ação -->
+    <nav id="header-buttons">
+      <a href="#historia" class="btn-header">História</a>
+      <a href="#equipe" class="btn-header">Sobre Nós</a>
+      <a href="#instituicao" class="btn-header">Instituição</a>
+    </nav>
+  </header>
+
+  <!-- Botão Flutuante de Voltar -->
+  <button class="back-arrow" aria-label="Voltar à página anterior">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+  </button>
+
+  <main id="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Plataforma ExpeRT</h1>
+        <p>Inovação, automação e suporte tecnológico para transformar a aprendizagem prática de Ciências da Natureza e Matemática.</p>
+        <div class="hero-actions">
+          <a href="#historia" class="btn-animado">Conhecer a Trajetória</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- Seção História e Linha do Tempo -->
+      <section id="historia">
+        <h2 class="section-title">Nossa História e Evolução</h2>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <span class="timeline-date">2016 — Concepção e Primeira Versão (SVD)</span>
+            <div class="timeline-card">
+              <h3>Integração Java/Arduino e Visualização de Dados</h3>
+              <p>
+                A Plataforma ExpeRT nasceu para enfrentar um desafio recorrente na educação básica: a escassez de laboratórios equipados e a carência de ferramentas acessíveis para a realização de experimentos práticos nas disciplinas de Ciências da Natureza e Matemática.
+              </p>
+              <p>
+                A solução inicial consistiu no desenvolvimento do Sistema de Visualização de Dados (SVD) em linguagem Java, integrado diretamente à plataforma de prototipagem Arduino. Esse sistema pioneiro permitia conectar sensores de baixo custo — como o sensor de temperatura LM35 e o sensor ultrassônico de distância HC-SR04 — para capturar variáveis físicas e gerar gráficos em tempo real no computador. Com isso, alunos e professores puderam transformar aulas teóricas em investigações científicas dinâmicas e visuais.
+              </p>
+              <div class="tech-tags">
+                <span>Java</span> <span>Arduino</span> <span>LM35</span> <span>HC-SR04</span> <span>Automação Didática</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-date">Evolução Intermediária — Consolidação e Portal Web</span>
+            <div class="timeline-card">
+              <h3>Aprimoramento Pedagógico e Distribuição Web</h3>
+              <p>
+                Com a aplicação prática do SVD em ambientes escolares, surgiram novas demandas pedagógicas e técnicas. O software em Java foi continuamente atualizado para oferecer maior controle aos professores durante as práticas experimentais, incluindo a possibilidade de configurar a taxa de amostragem (frequência com que as leituras são feitas) e alternar instantaneamente a exibição dos dados entre gráficos contínuos e tabelas numéricas.
+              </p>
+              <p>
+                Nessa mesma fase, lançou-se um portal web dedicado para centralizar a distribuição do sistema, disponibilizar guias práticos, roteiros de apoio pedagógico e estabelecer um canal direto de comunicação com os educadores da rede pública de ensino.
+              </p>
+              <div class="tech-tags">
+                <span>PHP</span> <span>Bootstrap</span> <span>HTML5/CSS3</span> <span>Portal Educacional</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-date">2026 — Reformulação Tecnológica e Arquitetura Moderna</span>
+            <div class="timeline-card">
+              <h3>Ecossistema Web/Desktop Multiplataforma e Execução Offline</h3>
+              <p>
+                Em 2026, a plataforma passou por uma reconstrução estrutural completa para se adequar às exigências de infraestrutura moderna das escolas. Migrou-se a arquitetura legada para tecnologias Web avançadas empacotadas para execução nativa em desktop, eliminando dependências pesadas de instalação e garantindo funcionamento 100% offline em computadores escolares.
+              </p>
+              <p>
+                A versão atual oferece suporte a um conjunto expandido de sensores, mecanismo de exportação de dados brutos (para análise posterior em planilhas ou softwares estatísticos), interface responsiva com alto contraste e gráficos interativos de altíssima precisão.
+              </p>
+              <div class="tech-tags">
+                <span>Web Stack</span> <span>Desktop App</span> <span>Exportação CSV/JSON</span> <span>Suporte Offline</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Seção Sobre Nós / Equipe -->
+      <section id="equipe">
+        <h2 class="section-title">Sobre Nós (Desenvolvedores e Mentores)</h2>
+        <div class="team-grid">
+
+          <div class="team-card">
+            <h3>Desenvolvedores (2016)</h3>
+            <div class="role">Co-Fundadoras da Plataforma</div>
+            <ul>
+              <li>Helena Borges Daré</li>
+              <li>Vitória Rodrigues dos Santos</li>
+            </ul>
+          </div>
+
+          <div class="team-card">
+            <h3>Desenvolvedores (Fase Intermediária)</h3>
+            <div class="role">Aprimoramento SVD e Portal Web</div>
+            <ul>
+              <li>Eduardo Marmitt</li>
+              <li>Mariangela Mendes Recco</li>
+            </ul>
+          </div>
+
+          <div class="team-card">
+            <h3>Desenvolvedores (2026)</h3>
+            <div class="role">Reformulação Web/Desktop</div>
+            <ul>
+              <li>Arthur Correa Pacheco</li>
+              <li>Laura Bitencourt Silveira</li>
+            </ul>
+          </div>
+
+          <div class="team-card destaque">
+            <h3>Corpo Docente / Orientadores</h3>
+            <div class="role">Liderança do Projeto ExpeRT</div>
+            <ul>
+              <li>Prof. Me. Helmo Alan Batista de Araújo (Orientador / Idealizador)</li>
+              <li>Prof. Matheus Lorenzato Braga (Coorientador)</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Seção Instituição -->
+      <section id="instituicao">
+        <h2 class="section-title">Instituição de Origem</h2>
+        <div class="institution-card">
+          <p>A <strong>Plataforma ExpeRT</strong> é desenvolvida e mantida no <strong>Instituto Federal de Educação, Ciência e Tecnologia Catarinense (IFC) – Campus Sombrio</strong>. Trata-se de um projeto de pesquisa focado em soluções computacionais aplicadas ao ensino didático de ciências.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2026 Plataforma ExpeRT — Instituto Federal Catarinense (Campus Sombrio)</p>
+  </footer>
+
+</body>
+</html>

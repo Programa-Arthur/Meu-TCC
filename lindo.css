@@ -1,0 +1,325 @@
+/* Variáveis do Tema */
+:root {
+    --site-header-height: 80px;
+    --bg-main: #001264;
+    --bg-header: #3e57c7;
+    --bg-card: #ffffff;
+    --text-dark: #1e293b;
+    --text-light: #f8fafc;
+    --accent-cyan: #00d2ff;
+    --accent-green: #25d366;
+    --accent-red: #ff4757;
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-light);
+    background-color: var(--bg-main);
+    padding-top: var(--site-header-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header Fixo */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--site-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    background: var(--bg-header);
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.logo-text span {
+    color: var(--accent-cyan);
+    font-weight: 400;
+}
+
+/* Navegação */
+#header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-header {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-header:hover {
+    background: #fff;
+    color: var(--bg-header);
+    transform: translateY(-2px);
+}
+
+/* Botão Voltar Flutuante */
+.back-arrow {
+    position: fixed;
+    top: calc(var(--site-header-height) + 16px);
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--bg-header);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 900;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.back-arrow:hover {
+    transform: scale(1.1);
+    background: var(--accent-cyan);
+    color: #001264;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, rgba(62,87,199,0.9) 0%, rgba(0,18,100,0.95) 100%);
+    padding: 5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Botões Animados Principais */
+.btn-animado {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 30px;
+    background: var(--accent-cyan);
+    color: #001264;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-animado:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,210,255,0.4);
+}
+
+/* Container de Conteúdo */
+.container {
+    max-width: 1150px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+section {
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--accent-cyan);
+    border-radius: 2px;
+}
+
+/* Linha do Tempo (História) */
+.timeline {
+    position: relative;
+    border-left: 3px solid var(--bg-header);
+    padding-left: 2rem;
+    margin-left: 1rem;
+}
+
+.timeline-item {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.55rem;
+    top: 0.3rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--accent-cyan);
+    border: 3px solid var(--bg-main);
+}
+
+.timeline-date {
+    font-weight: 700;
+    color: var(--accent-cyan);
+    font-size: 1rem;
+}
+
+.timeline-card {
+    background: var(--bg-card);
+    color: var(--text-dark);
+    padding: 1.8rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    margin-top: 0.5rem;
+}
+
+.timeline-card h3 {
+    color: var(--bg-main);
+    margin-bottom: 0.5rem;
+}
+
+.tech-tags {
+    margin-top: 1rem;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tech-tags span {
+    background: #e2e8f0;
+    color: #334155;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Grid de Equipe */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.team-card {
+    background: var(--bg-card);
+    color: var(--text-dark);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-top: 5px solid var(--bg-header);
+}
+
+.team-card.destaque {
+    border-top-color: var(--accent-cyan);
+}
+
+.team-card h3 {
+    color: var(--bg-main);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.team-card .role {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.team-card ul {
+    list-style-type: none;
+}
+
+.team-card li {
+    padding: 4px 0;
+    font-weight: 500;
+}
+
+/* Card Instituição */
+.institution-card {
+    background: var(--bg-card);
+    color: var(--text-dark);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Footer */
+footer {
+    background-color: #000a38;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 0 1rem;
+    }
+    #header-buttons {
+        display: none;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
