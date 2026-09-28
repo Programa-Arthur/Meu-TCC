@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Plataforma ExpeRT</title>
+  <!-- Ícones e Estilos do Projeto -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="lindo.css">
+</head>
+<body class="login-page">
+
+  <!-- Cabeçalho Fixo -->
+  <header class="site-header">
+    <div id="logo-container">
+      <a href="index.html" class="logo-link">
+        <div class="logo-text">ExpeRT <span>Platform</span></div>
+      </a>
+    </div>
+
+    <nav id="header-buttons">
+      <!-- Botão para voltar à página principal -->
+      <a href="index.html" class="btn-header">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </a>
+
+      <!-- Alternador de Tema -->
+      <button class="btn-header theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i class="bi bi-sun-fill" id="themeIcon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Container Centralizado do Login -->
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <i class="bi bi-shield-lock-fill login-icon"></i>
+        <h2>Acesso à Plataforma</h2>
+        <p>Digite as suas credenciais para continuar</p>
+      </div>
+
+      <form id="loginForm" action="#" method="POST">
+        <div class="form-group">
+          <label for="email">E-mail ou Utilizador</label>
+          <div class="input-wrapper">
+            <i class="bi bi-envelope"></i>
+            <input type="email" id="email" placeholder="seu.email@ifc.edu.br" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <div class="input-wrapper">
+            <i class="bi bi-lock"></i>
+            <input type="password" id="password" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" id="remember"> Lembrar-me
+          </label>
+          <a href="#" class="forgot-password">Esqueceu a senha?</a>
+        </div>
+
+        <button type="submit" class="btn-animado btn-login-submit">Entrar</button>
+      </form>
+
+      <div class="login-footer">
+        <p>Não tem conta? <a href="#">Solicite o acesso</a> ao administrador do sistema.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Plataforma ExpeRT — Instituto Federal Catarinense (Campus Sombrio)</p>
+  </footer>
+
+  <!-- Script para alternância de tema -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggleBtn = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const htmlElement = document.documentElement;
+
+      function applyTheme(theme) {
+        htmlElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          themeIcon.className = 'bi bi-moon-fill';
+        } else {
+          themeIcon.className = 'bi bi-sun-fill';
+        }
+      }
+
+      // Lê a escolha guardada no localStorage (mantém a preferência do index)
+      const savedTheme = localStorage.getItem('expert_theme') || 'dark';
+      applyTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('expert_theme', newTheme);
+      });
+    });
+  </script>
+</body>
+</html>
