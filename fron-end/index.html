@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -172,7 +172,7 @@
       );
     }
 
-    applyTheme(localStorage.getItem('expert_theme') || 'dark');
+    applyTheme(localStorage.getItem('expert_theme') || 'light');
 
     themeToggleBtn.addEventListener('click', () => {
       const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
