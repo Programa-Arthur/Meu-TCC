@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,10 @@
     <!-- Navegação e Botões de Ação -->
     <nav id="header-buttons">
       <a href="login.html" class="btn-header">Login</a>
-      </nav>
+      <button class="btn-header theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
+        <span id="themeIcon" aria-hidden="true">☀</span>
+      </button>
+    </nav>
   </header>
 
   <main id="main-content">
@@ -60,7 +63,7 @@
           </div>
 
           <div class="timeline-item">
-            <span class="timeline-date">Evolução Intermediária — Consolidação e Portal Web</span>
+            <span class="timeline-date">2020 — Consolidação e Portal Web</span>
             <div class="timeline-card">
               <h3>Aprimoramento Pedagógico e Distribuição Web</h3>
               <p>
@@ -109,7 +112,7 @@
           </div>
 
           <div class="team-card">
-            <h3>Desenvolvedores (Fase Intermediária)</h3>
+            <h3>Desenvolvedores (2020)</h3>
             <div class="role">Aprimoramento SVD e Portal Web</div>
             <ul>
               <li>Eduardo Marmitt</li>
@@ -155,5 +158,27 @@
     <p>&copy; 2026 Plataforma ExpeRT — Instituto Federal Catarinense (Campus Sombrio)</p>
   </footer>
 
+  <script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+
+    function applyTheme(theme) {
+      htmlElement.setAttribute('data-theme', theme);
+      themeIcon.textContent = theme === 'dark' ? '☀' : '☾';
+      themeToggleBtn.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'
+      );
+    }
+
+    applyTheme(localStorage.getItem('expert_theme') || 'dark');
+
+    themeToggleBtn.addEventListener('click', () => {
+      const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('expert_theme', newTheme);
+    });
+  </script>
 </body>
 </html>

@@ -1,4 +1,11 @@
 {
+  "name": "expert-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node login.js",
+    "dev": "node --watch login.js"
+  },
   "dependencies": {
     "mongodb": "^7.7.0"
   }

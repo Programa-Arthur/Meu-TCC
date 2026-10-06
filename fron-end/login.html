@@ -20,7 +20,7 @@
       <a href="index.html" class="btn-header">
         <i class="bi bi-arrow-left"></i> Voltar
       </a>
-      <button class="btn-header theme-toggle" id="themeToggle" aria-label="Alternar tema">
+      <button class="btn-header theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
         <i class="bi bi-sun-fill" id="themeIcon"></i>
       </button>
     </nav>
@@ -30,19 +30,35 @@
     <div class="login-card">
       <div class="login-header">
         <i class="bi bi-shield-lock-fill login-icon"></i>
-        <h2>Acesso à Plataforma</h2>
-        <p>Digite as suas credenciais para continuar</p>
+        <h2 id="loginTitle">Acesso à Plataforma</h2>
+        <p id="loginSubtitle">Digite as suas credenciais para continuar</p>
       </div>
 
       <!-- Div para exibir mensagens de erro do Banco de Dados -->
       <div id="mensagemErro" style="display:none; color: #ff4757; text-align: center; margin-bottom: 1rem; font-weight: 600;"></div>
 
       <form id="loginForm">
+        <div class="form-group" id="nameGroup" hidden>
+          <label for="name">Nome</label>
+          <div class="input-wrapper">
+            <i class="bi bi-person"></i>
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="Seu nome completo">
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="email">E-mail</label>
           <div class="input-wrapper">
             <i class="bi bi-envelope"></i>
             <input type="email" id="email" name="email" autocomplete="username" placeholder="seu.email@ifc.edu.br" required>
+          </div>
+        </div>
+
+        <div class="form-group" id="confirmPasswordGroup" hidden>
+          <label for="confirmPassword">Confirmar senha</label>
+          <div class="input-wrapper">
+            <i class="bi bi-lock-fill"></i>
+            <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" placeholder="••••••••">
           </div>
         </div>
 
@@ -58,14 +74,14 @@
           <label class="remember-me">
             <input type="checkbox" id="remember"> Lembrar-me
           </label>
-          <a href="#" class="forgot-password">Esqueceu a senha?</a>
+          <a href="#" class="forgot-password" id="forgotPassword">Esqueceu a senha?</a>
         </div>
 
         <button type="submit" class="btn-animado btn-login-submit" id="btnSubmit">Entrar</button>
       </form>
 
       <div class="login-footer">
-        <p>Não tem conta? <a href="#">Solicite o acesso</a> ao administrador do sistema.</p>
+        <p id="authToggleText">Não tem conta? <a href="#" id="authToggle">Criar conta</a>.</p>
       </div>
     </div>
   </main>
@@ -96,10 +112,52 @@
         localStorage.setItem('expert_theme', newTheme);
       });
 
-      // --- CONEXÃO DIRETA DO HTML / JS COM O BACKEND/MYSQL ---
+      // --- CONEXÃO COM A API NODE/MONGODB ---
       const loginForm = document.getElementById('loginForm');
       const mensagemErro = document.getElementById('mensagemErro');
       const botaoSubmit = document.getElementById('btnSubmit');
+      const nameGroup = document.getElementById('nameGroup');
+      const nameInput = document.getElementById('name');
+      const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const passwordInput = document.getElementById('password');
+      const authToggle = document.getElementById('authToggle');
+      const authToggleText = document.getElementById('authToggleText');
+      const forgotPassword = document.getElementById('forgotPassword');
+      let isRegistering = false;
+
+      function showMessage(message, isError = true) {
+        mensagemErro.innerText = message;
+        mensagemErro.style.color = isError ? '#ff4757' : '#16803c';
+        mensagemErro.style.display = 'block';
+      }
+
+      function updateAuthMode() {
+        nameGroup.hidden = !isRegistering;
+        confirmPasswordGroup.hidden = !isRegistering;
+        nameInput.required = isRegistering;
+        confirmPasswordInput.required = isRegistering;
+        passwordInput.autocomplete = isRegistering ? 'new-password' : 'current-password';
+        document.getElementById('loginTitle').innerText = isRegistering ? 'Criar conta' : 'Acesso à Plataforma';
+        document.getElementById('loginSubtitle').innerText = isRegistering
+          ? 'Preencha os dados para criar seu acesso'
+          : 'Digite as suas credenciais para continuar';
+        botaoSubmit.innerText = isRegistering ? 'Criar conta' : 'Entrar';
+        forgotPassword.hidden = isRegistering;
+        authToggleText.innerHTML = isRegistering
+          ? 'Já tem conta? <a href="#" id="authToggle">Entrar</a>.'
+          : 'Não tem conta? <a href="#" id="authToggle">Criar conta</a>.';
+        document.getElementById('authToggle').addEventListener('click', toggleAuthMode);
+      }
+
+      function toggleAuthMode(event) {
+        event.preventDefault();
+        isRegistering = !isRegistering;
+        mensagemErro.style.display = 'none';
+        updateAuthMode();
+      }
+
+      authToggle.addEventListener('click', toggleAuthMode);
 
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault(); // Impede o recarregamento da página
@@ -107,16 +165,22 @@
         botaoSubmit.disabled = true;
 
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const password = passwordInput.value;
+        const name = nameInput.value;
+
+        if (isRegistering && password !== confirmPasswordInput.value) {
+          showMessage('As senhas não são iguais.');
+          botaoSubmit.disabled = false;
+          return;
+        }
 
         try {
-          // Envia os dados para o script que consulta o MySQL
-          const response = await fetch('login.php', {
+          const response = await fetch(isRegistering ? '/api/register' : '/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify(isRegistering ? { name, email, password } : { email, password })
           });
 
           const data = await response.json();
@@ -125,18 +189,23 @@
             throw new Error(data.mensagem || 'Não foi possível entrar. Tente novamente.');
           }
 
-          if (data.sucesso) {
+          if (data.sucesso && isRegistering) {
+            isRegistering = false;
+            loginForm.reset();
+            updateAuthMode();
+            showMessage(data.mensagem, false);
+          } else if (data.sucesso) {
             // Salva dados da sessão e redireciona para a página principal
             localStorage.setItem('usuario_logado', JSON.stringify(data.usuario));
             window.location.href = 'index.html';
           } else {
-            // Exibe mensagem de erro retornada do MySQL
-            mensagemErro.innerText = data.mensagem;
-            mensagemErro.style.display = 'block';
+            // Exibe mensagem de erro retornada pela API
+            showMessage(data.mensagem);
           }
         } catch (error) {
-          mensagemErro.innerText = error.message || 'Erro ao conectar ao servidor. Tente novamente.';
-          mensagemErro.style.display = 'block';
+          showMessage(error.message || 'Erro ao conectar ao servidor. Tente novamente.');
+        } finally {
+          botaoSubmit.disabled = false;
         }
       });
     });
