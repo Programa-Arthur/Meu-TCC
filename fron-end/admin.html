@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administração | ExpeRT</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:Arial,sans-serif; background:#f3f6fa; color:#1b2b40; }
+    main { max-width:1050px; margin:40px auto; padding:24px; }
+    .card { background:#fff; border-radius:14px; padding:24px; box-shadow:0 5px 24px #14243a12; margin-bottom:20px; }
+    h1,h2 { margin-top:0; }
+    label { display:block; font-weight:600; margin:12px 0 6px; }
+    input { width:100%; max-width:420px; padding:12px; border:1px solid #cbd5e1; border-radius:8px; font-size:16px; }
+    button { padding:11px 16px; border:0; border-radius:8px; background:#075e48; color:#fff; font-weight:700; cursor:pointer; margin-top:12px; }
+    button.secondary { background:#475569; }
+    .message { margin-top:12px; color:#b42318; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+    .stat { background:#f0f6ff; border-radius:10px; padding:18px; }
+    .stat strong { display:block; font-size:30px; margin-top:8px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; min-width:620px; }
+    th,td { text-align:left; padding:12px; border-bottom:1px solid #e2e8f0; }
+    th { background:#f8fafc; }
+    .hidden { display:none; }
+    .muted { color:#64748b; }
+  </style>
+</head>
+<body>
+<main>
+  <section class="card" id="loginCard">
+    <h1>Administração ExpeRT</h1>
+    <p class="muted">Área restrita. Informe a senha administrativa para continuar.</p>
+    <form id="adminLoginForm">
+      <label for="adminPassword">Senha administrativa</label>
+      <input id="adminPassword" type="password" autocomplete="current-password" required>
+      <button type="submit">Entrar</button>
+      <p class="message" id="loginMessage" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="card">
+      <h1>Painel administrativo</h1>
+      <p class="muted">Lista de contas cadastradas no ExpeRT. Visitantes sem conta não aparecem nesta lista.</p>
+      <button class="secondary" id="refreshButton">Atualizar dados</button>
+      <button id="logoutButton">Sair</button>
+      <p class="message" id="dashboardMessage" role="status"></p>
+    </div>
+    <div class="card stats">
+      <div class="stat">Total de contas cadastradas<strong id="totalUsers">0</strong></div>
+      <div class="stat">Docentes<strong id="totalTeachers">0</strong></div>
+      <div class="stat">Discentes<strong id="totalStudents">0</strong></div>
+      <div class="stat">Docentes com instituição<strong id="totalInstitutions">0</strong></div>
+    </div>
+    <div class="card">
+      <h2>Usuários cadastrados</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome</th><th>E-mail</th><th>Tipo</th><th>Instituição</th><th>Data de cadastro</th></tr></thead>
+          <tbody id="usersTable"><tr><td colspan="5">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  let adminToken = '';
+
+  const loginCard = document.getElementById('loginCard');
+  const dashboard = document.getElementById('dashboard');
+  const loginMessage = document.getElementById('loginMessage');
+  const dashboardMessage = document.getElementById('dashboardMessage');
+
+  document.getElementById('adminLoginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    loginMessage.textContent = '';
+    const password = document.getElementById('adminPassword').value;
+
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.mensagem || 'Não foi possível entrar.');
+      adminToken = data.token;
+      loginCard.classList.add('hidden');
+      dashboard.classList.remove('hidden');
+      await loadUsers();
+    } catch (error) {
+      loginMessage.textContent = error.message || 'Erro de conexão com o servidor.';
+    }
+  });
+
+  async function loadUsers() {
+    dashboardMessage.textContent = '';
+    try {
+      const response = await fetch('/api/admin/users', {
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        if (response.status === 401) logout();
+        throw new Error(data.mensagem || 'Não foi possível carregar os usuários.');
+      }
+
+      const users = data.users || [];
+      document.getElementById('totalUsers').textContent = data.total;
+      document.getElementById('totalTeachers').textContent = data.docentes;
+      document.getElementById('totalStudents').textContent = data.discentes;
+      document.getElementById('totalInstitutions').textContent = data.docentesComInstituicao;
+
+      const tbody = document.getElementById('usersTable');
+      tbody.replaceChildren();
+      if (!users.length) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 5;
+        td.textContent = 'Ainda não há usuários cadastrados.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      for (const user of users) {
+        const tr = document.createElement('tr');
+        const institution = user.type === 'docente' && user.institution?.linked
+          ? user.institution.name
+          : '—';
+        const values = [
+          user.name || '—',
+          user.email || '—',
+          user.type === 'docente' ? 'Docente' : 'Discente',
+          institution,
+          user.createdAt ? new Date(user.createdAt).toLocaleString('pt-BR') : '—'
+        ];
+        for (const value of values) {
+          const td = document.createElement('td');
+          td.textContent = value;
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+    } catch (error) {
+      dashboardMessage.textContent = error.message || 'Erro ao carregar os dados.';
+    }
+  }
+
+  function logout() {
+    adminToken = '';
+    dashboard.classList.add('hidden');
+    loginCard.classList.remove('hidden');
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('usersTable').replaceChildren();
+  }
+
+  document.getElementById('refreshButton').addEventListener('click', loadUsers);
+  document.getElementById('logoutButton').addEventListener('click', logout);
+</script>
+</body>
+</html>
