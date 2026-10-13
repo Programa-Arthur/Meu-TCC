@@ -34,6 +34,9 @@ const credentialsPath = join(
 const port = Number(
   process.env.PORT || 3000
 );
+const adminSessions = new Map();
+const userSessions = new Map();
+const userSessionDuration = 8 * 60 * 60 * 1000;
 
 
 // ======================================================
@@ -63,6 +66,7 @@ function loadEnvironment(path) {
 
 
 const environment = loadEnvironment(credentialsPath);
+const adminPassword = environment.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || '';
 
 
 // ======================================================
@@ -114,9 +118,10 @@ const contentTypes = {
 // ENVIAR JSON
 // ======================================================
 
-function sendJson(response, statusCode, body) {
+function sendJson(response, statusCode, body, headers = {}) {
   response.writeHead(statusCode, {
-    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Type': 'application/json; charset=utf-8',
+    ...headers
   });
 
   response.end(
@@ -293,7 +298,8 @@ async function login(request, response) {
 
     const {
       email,
-      password
+      password,
+      type
     } = await readJsonBody(request);
 
 
@@ -301,6 +307,7 @@ async function login(request, response) {
     if (
       typeof email !== 'string' ||
       typeof password !== 'string' ||
+      !['docente', 'discente', 'outro'].includes(type) ||
       !email.trim() ||
       !password
     ) {
@@ -351,7 +358,8 @@ async function login(request, response) {
       !passwordMatches(
         password,
         user.passwordHash
-      )
+      ) ||
+      (user.type || 'discente') !== type
     ) {
 
       return sendJson(
@@ -360,13 +368,19 @@ async function login(request, response) {
         {
           sucesso: false,
           mensagem:
-            'E-mail ou senha inválidos.'
+            'E-mail, senha ou tipo de usuário inválidos.'
         }
       );
     }
 
 
-    // Login realizado
+    // Login realizado: cria uma sessão validada pelo servidor.
+    const sessionToken = randomBytes(32).toString('hex');
+    userSessions.set(sessionToken, Date.now() + userSessionDuration);
+    const secureCookie = request.headers['x-forwarded-proto'] === 'https' || request.socket.encrypted
+      ? '; Secure'
+      : '';
+
     return sendJson(
       response,
       200,
@@ -390,6 +404,9 @@ async function login(request, response) {
               name: null
             }
         }
+      },
+      {
+        'Set-Cookie': `expert_session=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${userSessionDuration / 1000}${secureCookie}`
       }
     );
 
@@ -453,9 +470,7 @@ async function register(request, response) {
     // o usuário será considerado discente.
 
     const normalizedType =
-      type === 'docente'
-        ? 'docente'
-        : 'discente';
+      ['docente', 'discente', 'outro'].includes(type) ? type : '';
 
 
     // ------------------------------------------
@@ -498,7 +513,8 @@ async function register(request, response) {
     if (
       !normalizedName ||
       !normalizedEmail ||
-      typeof password !== 'string'
+      typeof password !== 'string' ||
+      !normalizedType
     ) {
 
       return sendJson(
@@ -628,6 +644,57 @@ async function register(request, response) {
   }
 }
 
+function adminLogin(request, response) {
+  return readJsonBody(request).then(({ password }) => {
+    if (!adminPassword) {
+      return sendJson(response, 503, {
+        mensagem: 'Configure ADMIN_PASSWORD no beck-end/atlas-credentials.env para ativar o painel administrativo.'
+      });
+    }
+    if (typeof password !== 'string' || password !== adminPassword) {
+      return sendJson(response, 401, { mensagem: 'Senha administrativa inválida.' });
+    }
+    const token = randomBytes(32).toString('hex');
+    adminSessions.set(token, Date.now() + 8 * 60 * 60 * 1000);
+    return sendJson(response, 200, { token });
+  }).catch(() => sendJson(response, 400, { mensagem: 'Não foi possível validar o acesso administrativo.' }));
+}
+
+async function listAdminUsers(request, response) {
+  const token = request.headers.authorization?.replace(/^Bearer\s+/i, '');
+  const expiresAt = adminSessions.get(token);
+  if (!expiresAt || expiresAt < Date.now()) {
+    adminSessions.delete(token);
+    return sendJson(response, 401, { mensagem: 'Sessão administrativa expirada.' });
+  }
+  try {
+    const usersList = await users.find({}, {
+      projection: { name: 1, email: 1, type: 1, institution: 1, createdAt: 1 }
+    }).sort({ createdAt: -1 }).toArray();
+    const safeUsers = usersList.map((user) => ({
+      name: user.name,
+      email: user.email,
+      type: ['docente', 'discente', 'outro'].includes(user.type) ? user.type : 'discente',
+      institution: user.institution || { linked: false, name: null },
+      createdAt: user.createdAt
+    }));
+    const docentes = safeUsers.filter((user) => user.type === 'docente');
+    const discentes = safeUsers.filter((user) => user.type === 'discente');
+    const outros = safeUsers.filter((user) => user.type === 'outro');
+    return sendJson(response, 200, {
+      total: safeUsers.length,
+      docentes: docentes.length,
+      discentes: discentes.length,
+      outros: outros.length,
+      docentesComInstituicao: docentes.filter((user) => user.institution.linked).length,
+      users: safeUsers
+    });
+  } catch (error) {
+    console.error('Falha ao listar usuários:', error.message);
+    return sendJson(response, 500, { mensagem: 'Não foi possível carregar os usuários.' });
+  }
+}
+
 
 // ======================================================
 // ENVIAR ARQUIVOS DO FRONT-END
@@ -695,6 +762,13 @@ const server =
           )
         );
 
+      if (request.method === 'POST' && url.pathname === '/api/admin/login') {
+        return adminLogin(request, response);
+      }
+      if (request.method === 'GET' && url.pathname === '/api/admin/users') {
+        return listAdminUsers(request, response);
+      }
+
 
       // ------------------------------------------
       // LOGIN
@@ -746,6 +820,24 @@ const server =
             colecao: 'users'
           }
         );
+      }
+
+      // O tutorial e os arquivos da aplicação só podem ser acessados com sessão válida.
+      const protectedTutorialPath = url.pathname === '/tutorial.html' ||
+        url.pathname.startsWith('/downloads/plataforma-expert/');
+      if (request.method === 'GET' && protectedTutorialPath) {
+        const sessionCookie = request.headers.cookie
+          ?.split(';')
+          .map((part) => part.trim())
+          .find((part) => part.startsWith('expert_session='));
+        const sessionToken = sessionCookie?.slice('expert_session='.length);
+        const expiresAt = userSessions.get(sessionToken);
+
+        if (!expiresAt || expiresAt <= Date.now()) {
+          userSessions.delete(sessionToken);
+          response.writeHead(302, { Location: '/login.html?redirect=tutorial.html' });
+          return response.end();
+        }
       }
 
 

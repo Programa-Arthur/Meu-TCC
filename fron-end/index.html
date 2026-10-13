@@ -12,12 +12,14 @@
   <!-- Cabeçalho Fixo (Header) -->
   <header class="site-header">
     <div id="logo-container">
-      <div class="logo-text">ExpeRT <span>Platform</span></div>
+      <a href="index.html" aria-label="ExpeRT, página inicial"><img class="brand-image" src="imagens/logo.png" alt="ExpeRT Plataforma"></a>
     </div>
 
     <!-- Navegação e Botões de Ação -->
     <nav id="header-buttons">
       <a href="login.html" class="btn-header">Login</a>
+      <a href="tutorial.html" class="btn-header">Tutorial</a>
+      <a href="admin.html" class="btn-header">Administração</a>
       <button class="btn-header theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
         <span id="themeIcon" aria-hidden="true">☀</span>
       </button>
@@ -33,6 +35,7 @@
         <p>Inovação, automação e suporte tecnológico para transformar a aprendizagem prática de Ciências da Natureza e Matemática.</p>
         <div class="hero-actions">
           <a href="#historia" class="btn-animado">Conhecer a Trajetória</a>
+          <a href="tutorial.html" class="btn-animado">Como utilizar</a>
           <a href="#equipe" class="btn-animado">Sobre Nós</a>
           <a href="#instituicao" class="btn-animado">Instituição</a>
         </div>
@@ -97,17 +100,34 @@
         </div>
       </section>
 
+      <section id="recursos">
+        <h2 class="section-title">Sensores e componentes</h2>
+        <p class="section-intro">Conheça alguns dos componentes que podem fazer parte das atividades experimentais da plataforma.</p>
+        <div class="resource-grid">
+          <figure class="resource-card"><img src="imagens/Temperatura.png" alt="Sensor de temperatura"><figcaption>Temperatura</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/Distancia.png" alt="Sensor de distância"><figcaption>Distância</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/Luminosidade.png" alt="Sensor de luminosidade"><figcaption>Luminosidade</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/SensorHall.png" alt="Sensor de efeito Hall"><figcaption>Sensor Hall</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/Piezoeletrico.png" alt="Sensor piezoelétrico"><figcaption>Piezoelétrico</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/MotorCC.png" alt="Motor de corrente contínua"><figcaption>Motor CC</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/MotorServo.png" alt="Motor servo"><figcaption>Motor servo</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/PiscaLed.png" alt="LED para experimentos"><figcaption>Pisca LED</figcaption></figure>
+          <figure class="resource-card"><img src="imagens/Buzzer.png" alt="Buzzer"><figcaption>Buzzer</figcaption></figure>
+        </div>
+      </section>
+
       <!-- Seção Sobre Nós / Equipe -->
       <section id="equipe">
         <h2 class="section-title">Sobre Nós (Desenvolvedores e Mentores)</h2>
+        <p class="section-intro">Conheça as pessoas que criaram, aprimoraram e orientam a Plataforma ExpeRT.</p>
         <div class="team-grid">
 
           <div class="team-card">
             <h3>Desenvolvedores (2016)</h3>
             <div class="role">Co-Fundadoras da Plataforma</div>
             <ul>
-              <li>Helena Borges Daré</li>
-              <li>Vitória Rodrigues dos Santos</li>
+              <li><span>Helena Borges Daré</span></li>
+              <li><span>Vitória Rodrigues dos Santos</span></li>
             </ul>
           </div>
 
@@ -115,8 +135,8 @@
             <h3>Desenvolvedores (2020)</h3>
             <div class="role">Aprimoramento SVD e Portal Web</div>
             <ul>
-              <li>Eduardo Marmitt</li>
-              <li>Mariangela Mendes Recco</li>
+              <li><span>Eduardo Marmitt</span></li>
+              <li><span>Mariangela Mendes Recco</span></li>
             </ul>
           </div>
 
@@ -124,21 +144,32 @@
             <h3>Desenvolvedores (2026)</h3>
             <div class="role">Reformulação Web/Desktop</div>
             <ul>
-              <li>Arthur Correa Pacheco</li>
-              <li>Laura Bitencourt Silveira</li>
+              <li><span>Arthur Correa Pacheco</span></li>
+              <li><span>Laura Bitencourt Silveira</span></li>
             </ul>
           </div>
 
-          <div class="team-card destaque">
-            <h3>Corpo Docente / Orientadores</h3>
-            <div class="role">Liderança do Projeto ExpeRT</div>
-            <ul>
-              <li>Prof. Me. Helmo Alan Batista de Araújo (Orientador / Idealizador) Email : helmo.araujo@ifc.edu.br</li>
-              <li>Prof. Matheus Lorenzato Braga (Coorientador) Email : mateus.braga@ifc.edu.br</li>
-              <li>Marcos Antonio Ssilvera de Santos (Coorientador) Email : marco.souza@ifc.edu.br</li>
-            </ul>
-          </div>
+        </div>
 
+        <div class="faculty-section">
+          <h3 class="faculty-title">Corpo docente e orientação</h3>
+          <div class="faculty-grid">
+            <article class="team-card destaque">
+              <h3>Prof. Me. Helmo Alan Batista de Araújo</h3>
+              <div class="role">Orientador / Idealizador</div>
+              <a href="mailto:helmo.araujo@ifc.edu.br">helmo.araujo@ifc.edu.br</a>
+            </article>
+            <article class="team-card destaque">
+              <h3>Prof. Matheus Lorenzato Braga</h3>
+              <div class="role">Coorientador</div>
+              <a href="mailto:mateus.braga@ifc.edu.br">mateus.braga@ifc.edu.br</a>
+            </article>
+            <article class="team-card destaque">
+              <h3>Marcos Antonio Ssilvera de Santos</h3>
+              <div class="role">Coorientador</div>
+              <a href="mailto:marco.souza@ifc.edu.br">marco.souza@ifc.edu.br</a>
+            </article>
+          </div>
         </div>
       </section>
 

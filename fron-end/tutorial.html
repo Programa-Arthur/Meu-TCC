@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial | Plataforma ExpeRT</title>
+  <link rel="stylesheet" href="lindo.css">
+  <style>
+    .tutorial-main { max-width: 1000px; margin: 3rem auto; padding: 0 1.5rem; }
+    .tutorial-hero { padding: 2.5rem; border-radius: 16px; color: white; background: linear-gradient(115deg, #1c438f, #102b68); }
+    .tutorial-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: .75rem; }
+    .tutorial-hero p { max-width: 760px; }
+    .tutorial-card { margin-top: 1.5rem; padding: 2rem; border-radius: 14px; background: var(--bg-card); color: var(--text-dark); box-shadow: 0 4px 14px rgba(27,49,95,.08); }
+    .tutorial-card h2 { color: var(--text-card); margin-bottom: .75rem; }
+    .tutorial-card h3 { color: var(--text-card); margin: 1.25rem 0 .4rem; }
+    .tutorial-card p, .tutorial-card li { color: var(--text-card-muted); }
+    .tutorial-card p + p { margin-top: .7rem; }
+    .tutorial-card ol, .tutorial-card ul { padding-left: 1.4rem; }
+    .tutorial-card li + li { margin-top: .4rem; }
+    .notice { margin-top: 1rem; padding: 1rem 1.2rem; border-left: 4px solid #e6a700; background: #fff8df; border-radius: 8px; color: #594500; }
+    .command { margin: .8rem 0; padding: 1rem; overflow-x: auto; border-radius: 8px; background: #10213c; color: #e9f3ff; font-family: monospace; }
+    .sensor-table-wrap { overflow-x: auto; margin-top: 1rem; }
+    .sensor-table { width: 100%; min-width: 620px; border-collapse: collapse; }
+    .sensor-table th, .sensor-table td { padding: .8rem; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    .sensor-table th { background: #f0f6ff; color: #1b315f; }
+    .tutorial-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; }
+    .download-card { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .download-card p { max-width: 610px; }
+    @media (max-width: 600px) { .tutorial-hero, .tutorial-card { padding: 1.4rem; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div id="logo-container"><a href="index.html" aria-label="ExpeRT, página inicial"><img class="brand-image" src="imagens/logo.png" alt="ExpeRT Plataforma"></a></div>
+    <nav id="header-buttons"><a class="btn-header" href="index.html">Início</a><a class="btn-header" href="login.html">Login</a></nav>
+  </header>
+  <main class="tutorial-main">
+    <section class="tutorial-hero">
+      <h1>Como usar a Plataforma ExpeRT</h1>
+      <p>Conecte o Arduino por USB, abra a plataforma e acompanhe as leituras dos sensores em tabelas ou gráficos. A plataforma procura automaticamente uma porta serial compatível.</p>
+    </section>
+      <div class="download-card" style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e2e8f0;">
+        <div>
+          <h3>Arquivo do projeto</h3>
+          <p>O ZIP é destinado a quem deseja instalar dependências, desenvolver ou gerar o aplicativo em outro sistema operacional.</p>
+        </div>
+        <a class="btn-animado" href="downloads/plataforma-expert.zip" download>Baixar código-fonte (.zip)</a>
+      </div>
+    </section>
+
+    <section class="tutorial-card" aria-labelledby="connection-title">
+      <h2 id="connection-title">1. Conectar o Arduino e os componentes</h2>
+      <ol>
+        <li>Com o Arduino desligado do USB, monte o circuito do sensor ou atuador que será usado.</li>
+        <li>Siga o esquema elétrico e o programa (sketch) do Arduino correspondentes ao seu experimento. Confira alimentação, polaridade e pinos antes de ligar.</li>
+        <li>Conecte o Arduino ao computador com um cabo USB que transmita dados. Aguarde o sistema reconhecer a porta serial.</li>
+        <li>Feche o Monitor Serial da Arduino IDE e outros programas que possam estar usando a porta. Só um programa pode controlar a porta serial de cada vez.</li>
+      </ol>
+      <div class="notice"><strong>Importante:</strong> o ZIP disponibilizado aqui contém a aplicação da plataforma, mas não inclui o sketch do Arduino nem um mapa de pinos dos circuitos. Por isso, use o esquema e o firmware fornecidos para o seu kit; não escolha os pinos por tentativa. Motores podem precisar de driver e fonte externa: não os alimente diretamente pelos pinos do Arduino.</div>
+    </section>
+
+    <section class="tutorial-card" aria-labelledby="start-title">
+      <h2 id="start-title">2. Instalar e abrir</h2>
+      <p>O projeto baixado é o código-fonte da aplicação. Ele requer Node.js e npm instalados no computador.</p>
+      <ol>
+        <li>Extraia o ZIP e abra um terminal na pasta extraída <code>plataforma-expert0</code>.</li>
+        <li>Instale as dependências:</li>
+      </ol>
+      <pre class="command">npm install</pre>
+      <p>Para abrir a versão desktop, execute:</p>
+      <pre class="command">npm start</pre>
+      <p>Ou, para iniciar o servidor e usar pelo navegador:</p>
+      <pre class="command">npm run start:server</pre>
+      <p>Depois acesse <code>http://localhost:3000</code>. No Linux, se o sistema negar acesso à porta serial, ajuste as permissões do dispositivo serial para o seu usuário.</p>
+    </section>
+
+    <section class="tutorial-card" aria-labelledby="use-title">
+      <h2 id="use-title">3. Escolher um sensor e iniciar uma leitura</h2>
+      <ol>
+        <li>Na tela <strong>Usar Dispositivos</strong>, selecione o card do componente montado no Arduino.</li>
+        <li>Escolha <strong>Tabela</strong> para acompanhar o valor atual ou <strong>Gráfico</strong> para visualizar a variação ao longo do tempo.</li>
+        <li>Leia o aviso na tela: confirme que o circuito corresponde ao componente escolhido e reinicie o Arduino antes da coleta.</li>
+        <li>Pressione <strong>Iniciar</strong>. O status no cabeçalho indica se há conexão; as leituras chegam pela conexão serial e são exibidas na plataforma.</li>
+        <li>Use <strong>Pausar</strong> para suspender a coleta e <strong>Reiniciar</strong> para limpar os dados e começar novamente. <strong>Trocar Dispositivo</strong> retorna à lista de componentes.</li>
+      </ol>
+      <p>O controle <strong>Amostragem</strong> ajusta o intervalo de atualização da tela. No modo gráfico, o seletor <strong>Tipo</strong> altera a visualização. Os botões de exportação salvam o gráfico como imagem ou os dados em uma planilha.</p>
+    </section>
+
+    <section class="tutorial-card" aria-labelledby="devices-title">
+      <h2 id="devices-title">4. Sensores e atuadores disponíveis</h2>
+      <p>A plataforma associa cada card a um canal de comunicação com o firmware do Arduino. As leituras e unidades abaixo são as descritas pela própria aplicação.</p>
+      <div class="sensor-table-wrap">
+        <table class="sensor-table">
+          <thead><tr><th>Componente</th><th>O que a plataforma mostra</th><th>Canal</th></tr></thead>
+          <tbody>
+            <tr><td>Temperatura (LM35/DHT)</td><td>Temperatura em °C</td><td>1</td></tr>
+            <tr><td>Distância (HC-SR04)</td><td>Distância em cm</td><td>2</td></tr>
+            <tr><td>Pisca LED</td><td>Período do sinal em ms</td><td>3</td></tr>
+            <tr><td>Luminosidade (LDR)</td><td>Intensidade luminosa em %</td><td>4</td></tr>
+            <tr><td>Buzzer</td><td>Canal relacionado à frequência sonora em Hz</td><td>5</td></tr>
+            <tr><td>Sensor Hall</td><td>Detecção de polo Norte, Sul ou ausência de campo</td><td>6</td></tr>
+            <tr><td>Motor CC</td><td>Canal relacionado à velocidade em %</td><td>7</td></tr>
+            <tr><td>Motor servo</td><td>Posição angular em graus</td><td>8</td></tr>
+            <tr><td>Piezoelétrico</td><td>Sinal de vibração em V</td><td>9</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notice">Buzzer, motor CC e servo são atuadores. A seleção do card inicia o canal correspondente, mas esta interface não oferece controles para definir frequência, velocidade ou ângulo. Esses comportamentos dependem do firmware instalado no Arduino e do circuito montado.</div>
+    </section>
+
+    <div class="tutorial-links">
+      <a class="btn-animado" href="index.html">Voltar à página inicial</a>
+    </div>
+  </main>
+  <footer><p>&copy; 2026 ExpeRT Plataforma — Instituto Federal Catarinense (Campus Sombrio)</p></footer>
+</body>
+</html>

@@ -7,6 +7,6 @@
     "dev": "node --watch login.js"
   },
   "dependencies": {
-    "mongodb": "^7.7.0"
+    "mongodb": "^6.21.0"
   }
 }

@@ -87,6 +87,13 @@ body {
     font-weight: 400;
 }
 
+.brand-image {
+    display: block;
+    width: 145px;
+    height: 62px;
+    object-fit: contain;
+}
+
 /* Navegação */
 #header-buttons {
     display: flex;
@@ -279,59 +286,166 @@ section {
     font-weight: 700;
 }
 
+.section-intro {
+    color: var(--text-light);
+    margin: -1rem 0 1.5rem;
+    max-width: 760px;
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.resource-card {
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid #e3eaf3;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 14px rgba(27, 49, 95, 0.08);
+}
+
+.resource-card img {
+    display: block;
+    width: 100%;
+    max-width: 170px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    margin: 0 auto 0.5rem;
+}
+
+.resource-card figcaption {
+    color: var(--text-card);
+    font-weight: 700;
+}
+
 /* Grid de Equipe */
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    align-items: start;
+    gap: 1.25rem;
 }
 
 .team-card {
+    position: relative;
+    overflow: hidden;
     background: var(--bg-card);
     color: var(--text-dark);
-    border-radius: var(--border-radius);
+    border-radius: 16px;
     padding: 1.5rem;
     border: 1px solid #e3eaf3;
-    box-shadow: 0 4px 14px rgba(27, 49, 95, 0.08);
-    border-top: 5px solid var(--bg-header);
+    border-top: 4px solid var(--bg-header);
+    box-shadow: 0 8px 24px rgba(27, 49, 95, 0.07);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(27, 49, 95, 0.12);
 }
 
 .team-card.destaque {
     border-top-color: var(--accent-cyan);
+    background: linear-gradient(155deg, #ffffff, #f7faff 75%);
 }
 
 .team-card h3 {
     color: var(--text-card);
-    font-size: 1.2rem;
-    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
 }
 
 .team-card .role {
     font-size: 0.85rem;
     color: #64748b;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
 }
 
 .team-card ul {
-    list-style-type: none;
+    display: grid;
+    gap: 0.65rem;
+    list-style: none;
 }
 
 .team-card li {
-    padding: 4px 0;
+    padding: 0.1rem 0;
     font-weight: 500;
+    line-height: 1.5;
 }
 
-@media (max-width: 1000px) {
-    .team-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+.team-card li span {
+    display: block;
+}
+
+.team-card.destaque li + li {
+    border-top: 1px solid #e3eaf3;
+    padding-top: 0.75rem;
+}
+
+.team-card li small {
+    display: block;
+    margin-top: 0.1rem;
+    color: var(--text-card-muted);
+    font-size: 0.82rem;
+}
+
+.team-card li a {
+    display: inline-block;
+    margin-top: 0.2rem;
+    color: #2864b5;
+    font-size: 0.88rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+}
+
+.team-card li a:hover {
+    text-decoration: underline;
+}
+
+.faculty-section {
+    margin-top: 2rem;
+}
+
+.faculty-title {
+    margin-bottom: 1rem;
+    color: var(--text-card);
+    font-size: 1.2rem;
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1.25rem;
+}
+
+.team-card.destaque > a {
+    display: inline-block;
+    color: #2864b5;
+    font-size: 0.9rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+}
+
+.team-card.destaque > a:hover {
+    text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .team-card { transition: none; }
+    .team-card:hover { transform: none; }
 }
 
 @media (max-width: 600px) {
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
+    .team-grid { grid-template-columns: 1fr; }
 }
 
 /* Card Instituição */
@@ -440,7 +554,8 @@ body.login-page {
     color: var(--text-card-muted);
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.input-wrapper select {
     width: 100%;
     padding: 10px 12px 10px 38px;
     border-radius: 8px;
@@ -451,7 +566,8 @@ body.login-page {
     color: #1e293b;
 }
 
-.input-wrapper input:focus {
+.input-wrapper input:focus,
+.input-wrapper select:focus {
     border-color: var(--bg-header);
     box-shadow: 0 0 0 3px rgba(62, 87, 199, 0.2);
 }

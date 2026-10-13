@@ -6,31 +6,28 @@
   <title>Administração | ExpeRT</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin:0; font-family:Arial,sans-serif; background:#f3f6fa; color:#1b2b40; }
-    main { max-width:1050px; margin:40px auto; padding:24px; }
-    .card { background:#fff; border-radius:14px; padding:24px; box-shadow:0 5px 24px #14243a12; margin-bottom:20px; }
-    h1,h2 { margin-top:0; }
-    label { display:block; font-weight:600; margin:12px 0 6px; }
-    input { width:100%; max-width:420px; padding:12px; border:1px solid #cbd5e1; border-radius:8px; font-size:16px; }
-    button { padding:11px 16px; border:0; border-radius:8px; background:#075e48; color:#fff; font-weight:700; cursor:pointer; margin-top:12px; }
-    button.secondary { background:#475569; }
-    .message { margin-top:12px; color:#b42318; }
-    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
-    .stat { background:#f0f6ff; border-radius:10px; padding:18px; }
-    .stat strong { display:block; font-size:30px; margin-top:8px; }
-    .table-wrap { overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; min-width:620px; }
-    th,td { text-align:left; padding:12px; border-bottom:1px solid #e2e8f0; }
-    th { background:#f8fafc; }
-    .hidden { display:none; }
-    .muted { color:#64748b; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f3f6fa; color: #1b2b40; }
+    header { background: #075e48; color: white; padding: 16px max(24px, calc((100% - 1100px)/2)); display: flex; justify-content: space-between; align-items: center; }
+    header a { color: white; text-decoration: none; }
+    main { max-width: 1100px; margin: 32px auto; padding: 0 20px; }
+    .card { background: white; border-radius: 14px; padding: 24px; box-shadow: 0 5px 24px #14243a12; margin-bottom: 20px; }
+    h1,h2 { margin-top: 0; } label { display: block; font-weight: 600; margin: 12px 0 6px; }
+    input { width: 100%; max-width: 420px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; }
+    button { padding: 11px 16px; border: 0; border-radius: 8px; background: #075e48; color: white; font-weight: 700; cursor: pointer; margin: 8px 8px 0 0; }
+    button.secondary { background: #475569; } .message { color: #b42318; min-height: 1.2em; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 14px; }
+    .stat { background: #f0f6ff; border-radius: 10px; padding: 18px; } .stat strong { display: block; font-size: 30px; margin-top: 8px; }
+    .table-wrap { overflow-x: auto; } table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th,td { text-align: left; padding: 12px; border-bottom: 1px solid #e2e8f0; } th { background: #f8fafc; }
+    .hidden { display: none; } .muted { color: #64748b; }
   </style>
 </head>
 <body>
+<header><strong>ExpeRT · Administração</strong><a href="index.html">Voltar ao início</a></header>
 <main>
   <section class="card" id="loginCard">
-    <h1>Administração ExpeRT</h1>
-    <p class="muted">Área restrita. Informe a senha administrativa para continuar.</p>
+    <h1>Acesso administrativo</h1>
+    <p class="muted">Área restrita aos administradores da plataforma.</p>
     <form id="adminLoginForm">
       <label for="adminPassword">Senha administrativa</label>
       <input id="adminPassword" type="password" autocomplete="current-password" required>
@@ -38,50 +35,43 @@
       <p class="message" id="loginMessage" role="alert"></p>
     </form>
   </section>
-
   <section id="dashboard" class="hidden">
     <div class="card">
       <h1>Painel administrativo</h1>
-      <p class="muted">Lista de contas cadastradas no ExpeRT. Visitantes sem conta não aparecem nesta lista.</p>
+      <p class="muted">Contas cadastradas. Acessos sem conta não aparecem nas tabelas.</p>
       <button class="secondary" id="refreshButton">Atualizar dados</button>
       <button id="logoutButton">Sair</button>
       <p class="message" id="dashboardMessage" role="status"></p>
     </div>
     <div class="card stats">
-      <div class="stat">Total de contas cadastradas<strong id="totalUsers">0</strong></div>
+      <div class="stat">Total de contas<strong id="totalUsers">0</strong></div>
       <div class="stat">Docentes<strong id="totalTeachers">0</strong></div>
       <div class="stat">Discentes<strong id="totalStudents">0</strong></div>
+      <div class="stat">Outros<strong id="totalOthers">0</strong></div>
       <div class="stat">Docentes com instituição<strong id="totalInstitutions">0</strong></div>
     </div>
-    <div class="card">
-      <h2>Usuários cadastrados</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Nome</th><th>E-mail</th><th>Tipo</th><th>Instituição</th><th>Data de cadastro</th></tr></thead>
-          <tbody id="usersTable"><tr><td colspan="5">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
+    <div id="tables"></div>
   </section>
 </main>
 <script>
   let adminToken = '';
-
   const loginCard = document.getElementById('loginCard');
   const dashboard = document.getElementById('dashboard');
   const loginMessage = document.getElementById('loginMessage');
   const dashboardMessage = document.getElementById('dashboardMessage');
+  const groups = [
+    { type: 'docente', title: 'Docentes' },
+    { type: 'discente', title: 'Discentes' },
+    { type: 'outro', title: 'Outros' }
+  ];
 
   document.getElementById('adminLoginForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     loginMessage.textContent = '';
-    const password = document.getElementById('adminPassword').value;
-
     try {
       const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: document.getElementById('adminPassword').value })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.mensagem || 'Não foi possível entrar.');
@@ -89,73 +79,63 @@
       loginCard.classList.add('hidden');
       dashboard.classList.remove('hidden');
       await loadUsers();
-    } catch (error) {
-      loginMessage.textContent = error.message || 'Erro de conexão com o servidor.';
-    }
+    } catch (error) { loginMessage.textContent = error.message || 'Erro de conexão com o servidor.'; }
   });
 
   async function loadUsers() {
     dashboardMessage.textContent = '';
     try {
-      const response = await fetch('/api/admin/users', {
-        headers: { 'Authorization': `Bearer ${adminToken}` }
-      });
+      const response = await fetch('/api/admin/users', { headers: { Authorization: `Bearer ${adminToken}` } });
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401) logout();
         throw new Error(data.mensagem || 'Não foi possível carregar os usuários.');
       }
-
-      const users = data.users || [];
       document.getElementById('totalUsers').textContent = data.total;
       document.getElementById('totalTeachers').textContent = data.docentes;
       document.getElementById('totalStudents').textContent = data.discentes;
+      document.getElementById('totalOthers').textContent = data.outros;
       document.getElementById('totalInstitutions').textContent = data.docentesComInstituicao;
-
-      const tbody = document.getElementById('usersTable');
-      tbody.replaceChildren();
-      if (!users.length) {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.colSpan = 5;
-        td.textContent = 'Ainda não há usuários cadastrados.';
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-        return;
-      }
-
-      for (const user of users) {
-        const tr = document.createElement('tr');
-        const institution = user.type === 'docente' && user.institution?.linked
-          ? user.institution.name
-          : '—';
-        const values = [
-          user.name || '—',
-          user.email || '—',
-          user.type === 'docente' ? 'Docente' : 'Discente',
-          institution,
-          user.createdAt ? new Date(user.createdAt).toLocaleString('pt-BR') : '—'
-        ];
-        for (const value of values) {
-          const td = document.createElement('td');
-          td.textContent = value;
-          tr.appendChild(td);
+      const container = document.getElementById('tables');
+      container.replaceChildren();
+      for (const group of groups) {
+        const card = document.createElement('section');
+        card.className = 'card';
+        const heading = document.createElement('h2');
+        heading.textContent = `${group.title} (${data[group.type === 'docente' ? 'docentes' : group.type === 'discente' ? 'discentes' : 'outros']})`;
+        card.appendChild(heading);
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        for (const label of ['Nome', 'E-mail', 'Instituição', 'Data de cadastro']) {
+          const th = document.createElement('th'); th.textContent = label; headRow.appendChild(th);
         }
-        tbody.appendChild(tr);
+        thead.appendChild(headRow); table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        const users = data.users.filter((user) => user.type === group.type);
+        if (!users.length) {
+          const row = document.createElement('tr'); const cell = document.createElement('td');
+          cell.colSpan = 4; cell.textContent = 'Nenhuma conta cadastrada nesta categoria.';
+          row.appendChild(cell); tbody.appendChild(row);
+        }
+        for (const user of users) {
+          const row = document.createElement('tr');
+          const institution = group.type === 'docente' && user.institution?.linked ? user.institution.name : '—';
+          const values = [user.name || '—', user.email || '—', institution,
+            user.createdAt ? new Date(user.createdAt).toLocaleString('pt-BR') : '—'];
+          for (const value of values) { const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell); }
+          tbody.appendChild(row);
+        }
+        table.appendChild(tbody); wrap.appendChild(table); card.appendChild(wrap); container.appendChild(card);
       }
-    } catch (error) {
-      dashboardMessage.textContent = error.message || 'Erro ao carregar os dados.';
-    }
+    } catch (error) { dashboardMessage.textContent = error.message || 'Erro ao carregar os dados.'; }
   }
-
   function logout() {
-    adminToken = '';
-    dashboard.classList.add('hidden');
-    loginCard.classList.remove('hidden');
-    document.getElementById('adminPassword').value = '';
-    document.getElementById('usersTable').replaceChildren();
+    adminToken = ''; dashboard.classList.add('hidden'); loginCard.classList.remove('hidden');
+    document.getElementById('adminPassword').value = ''; document.getElementById('tables').replaceChildren();
   }
-
   document.getElementById('refreshButton').addEventListener('click', loadUsers);
   document.getElementById('logoutButton').addEventListener('click', logout);
 </script>

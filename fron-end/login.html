@@ -54,6 +54,18 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="userType">Você é</label>
+          <div class="input-wrapper">
+            <i class="bi bi-people"></i>
+            <select id="userType" name="type" required>
+              <option value="discente">Discente</option>
+              <option value="docente">Docente</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group" id="confirmPasswordGroup" hidden>
           <label for="confirmPassword">Confirmar senha</label>
           <div class="input-wrapper">
@@ -167,6 +179,7 @@
         const email = document.getElementById('email').value;
         const password = passwordInput.value;
         const name = nameInput.value;
+        const type = document.getElementById('userType').value;
 
         if (isRegistering && password !== confirmPasswordInput.value) {
           showMessage('As senhas não são iguais.');
@@ -180,7 +193,7 @@
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(isRegistering ? { name, email, password } : { email, password })
+            body: JSON.stringify(isRegistering ? { name, email, password, type } : { email, password, type })
           });
 
           const data = await response.json();
@@ -195,9 +208,10 @@
             updateAuthMode();
             showMessage(data.mensagem, false);
           } else if (data.sucesso) {
-            // Salva dados da sessão e redireciona para a página principal
+            // A sessão autenticada também é validada pelo servidor via cookie HttpOnly.
             localStorage.setItem('usuario_logado', JSON.stringify(data.usuario));
-            window.location.href = 'index.html';
+            const requestedPage = new URLSearchParams(window.location.search).get('redirect');
+            window.location.href = requestedPage === 'tutorial.html' ? 'tutorial.html' : 'index.html';
           } else {
             // Exibe mensagem de erro retornada pela API
             showMessage(data.mensagem);
