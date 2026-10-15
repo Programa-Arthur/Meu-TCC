@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plataforma ExpeRT - Ensino Experimental de Ciências</title>
-  <!-- Link para o arquivo CSS e a pagina de login -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="lindo.css">
 </head>
 <body>
 
-  <!-- Cabeçalho Fixo (Header) -->
+  <!-- Cabeçalho Fixo (Header)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
   <header class="site-header">
     <div id="logo-container">
       <a href="index.html" aria-label="ExpeRT, página inicial"><img class="brand-image" src="imagens/logo.png" alt="ExpeRT Plataforma"></a>
@@ -20,8 +20,8 @@
       <a href="login.html" class="btn-header">Login</a>
       <a href="tutorial.html" class="btn-header">Tutorial</a>
       <a href="admin.html" class="btn-header">Administração</a>
-      <button class="btn-header theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
-        <span id="themeIcon" aria-hidden="true">☀</span>
+      <button class="btn-header theme-toggle" id="themeToggle" type="button" aria-label="Ativar tema escuro" title="Alternar tema">
+        <i class="bi bi-moon-stars-fill" id="themeIcon" aria-hidden="true"></i>
       </button>
     </nav>
   </header>
@@ -104,15 +104,15 @@
         <h2 class="section-title">Sensores e componentes</h2>
         <p class="section-intro">Conheça alguns dos componentes que podem fazer parte das atividades experimentais da plataforma.</p>
         <div class="resource-grid">
-          <figure class="resource-card"><img src="imagens/Temperatura.png" alt="Sensor de temperatura"><figcaption>Temperatura</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/Distancia.png" alt="Sensor de distância"><figcaption>Distância</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/Luminosidade.png" alt="Sensor de luminosidade"><figcaption>Luminosidade</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/SensorHall.png" alt="Sensor de efeito Hall"><figcaption>Sensor Hall</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/Piezoeletrico.png" alt="Sensor piezoelétrico"><figcaption>Piezoelétrico</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/MotorCC.png" alt="Motor de corrente contínua"><figcaption>Motor CC</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/MotorServo.png" alt="Motor servo"><figcaption>Motor servo</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/PiscaLed.png" alt="LED para experimentos"><figcaption>Pisca LED</figcaption></figure>
-          <figure class="resource-card"><img src="imagens/Buzzer.png" alt="Buzzer"><figcaption>Buzzer</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/Temperatura.png" alt="Sensor de temperatura"><span class="resource-badge" title="Temperatura"><i class="bi bi-thermometer-half" aria-hidden="true"></i></span></div><figcaption>Temperatura</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/Distancia.png" alt="Sensor de distância"><span class="resource-badge" title="Distância"><i class="bi bi-rulers" aria-hidden="true"></i></span></div><figcaption>Distância</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/Luminosidade.png" alt="Sensor de luminosidade"><span class="resource-badge" title="Luminosidade"><i class="bi bi-brightness-high-fill" aria-hidden="true"></i></span></div><figcaption>Luminosidade</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/SensorHall.png" alt="Sensor de efeito Hall"><span class="resource-badge" title="Campo magnético"><i class="bi bi-magnet-fill" aria-hidden="true"></i></span></div><figcaption>Sensor Hall</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/Piezoeletrico.png" alt="Sensor piezoelétrico"><span class="resource-badge" title="Vibração"><i class="bi bi-activity" aria-hidden="true"></i></span></div><figcaption>Piezoelétrico</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/MotorCC.png" alt="Motor de corrente contínua"><span class="resource-badge" title="Movimento"><i class="bi bi-gear-fill" aria-hidden="true"></i></span></div><figcaption>Motor CC</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/MotorServo.png" alt="Motor servo"><span class="resource-badge" title="Rotação"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span></div><figcaption>Motor servo</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/PiscaLed.png" alt="LED para experimentos"><span class="resource-badge" title="Luz"><i class="bi bi-lightbulb-fill" aria-hidden="true"></i></span></div><figcaption>Pisca LED</figcaption></figure>
+          <figure class="resource-card"><div class="resource-image"><img src="imagens/Buzzer.png" alt="Buzzer"><span class="resource-badge" title="Som"><i class="bi bi-volume-up-fill" aria-hidden="true"></i></span></div><figcaption>Buzzer</figcaption></figure>
         </div>
       </section>
 
@@ -196,7 +196,7 @@
 
     function applyTheme(theme) {
       htmlElement.setAttribute('data-theme', theme);
-      themeIcon.textContent = theme === 'dark' ? '☀' : '☾';
+      themeIcon.className = theme === 'dark' ? 'bi bi-brightness-high-fill' : 'bi bi-moon-stars-fill';
       themeToggleBtn.setAttribute(
         'aria-label',
         theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'

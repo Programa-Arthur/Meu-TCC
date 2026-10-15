@@ -39,7 +39,7 @@
     --text-light: #f8fafc;
     --accent-cyan: #00d2ff;
     --hero-button-bg: #00d2ff;
-    --hero-button-text: #001264;
+    --hero-button-text: #ffffff;
 }
 
 * {
@@ -119,8 +119,24 @@ body {
 }
 
 .theme-toggle {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
     font: inherit;
     cursor: pointer;
+}
+
+.theme-toggle .bi {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.theme-toggle .bi-brightness-high-fill {
+    color: #ffffff;
 }
 
 .back-arrow:hover {
@@ -294,32 +310,71 @@ section {
 
 .resource-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .resource-card {
     margin: 0;
-    padding: 1rem;
+    padding: 1.25rem 1.25rem 1.1rem;
     text-align: center;
     background: var(--bg-card);
     border: 1px solid #e3eaf3;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 14px rgba(27, 49, 95, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(27, 49, 95, 0.08);
 }
 
-.resource-card img {
+.resource-image {
+    position: relative;
+    width: min(100%, 180px);
+    height: 165px;
+    margin: 0 auto 0.9rem;
+}
+
+.resource-image img {
     display: block;
     width: 100%;
-    max-width: 170px;
-    aspect-ratio: 1;
+    height: 100%;
     object-fit: contain;
-    margin: 0 auto 0.5rem;
+}
+
+.resource-badge {
+    position: absolute;
+    right: -0.45rem;
+    bottom: -0.45rem;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-card);
+    border-radius: 50%;
+    background: #3478d4;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(27, 49, 95, 0.22);
+    font-size: 1rem;
 }
 
 .resource-card figcaption {
     color: var(--text-card);
     font-weight: 700;
+    font-size: 1rem;
+}
+
+@media (max-width: 760px) {
+    .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 430px) {
+    .resource-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+    }
 }
 
 /* Grid de Equipe */
