@@ -4,26 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Administração | ExpeRT</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; background: #f3f6fa; color: #1b2b40; }
-    header { background: #075e48; color: white; padding: 16px max(24px, calc((100% - 1100px)/2)); display: flex; justify-content: space-between; align-items: center; }
-    header a { color: white; text-decoration: none; }
-    main { max-width: 1100px; margin: 32px auto; padding: 0 20px; }
-    .card { background: white; border-radius: 14px; padding: 24px; box-shadow: 0 5px 24px #14243a12; margin-bottom: 20px; }
-    h1,h2 { margin-top: 0; } label { display: block; font-weight: 600; margin: 12px 0 6px; }
-    input { width: 100%; max-width: 420px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; }
-    button { padding: 11px 16px; border: 0; border-radius: 8px; background: #075e48; color: white; font-weight: 700; cursor: pointer; margin: 8px 8px 0 0; }
-    button.secondary { background: #475569; } .message { color: #b42318; min-height: 1.2em; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 14px; }
-    .stat { background: #f0f6ff; border-radius: 10px; padding: 18px; } .stat strong { display: block; font-size: 30px; margin-top: 8px; }
-    .table-wrap { overflow-x: auto; } table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    th,td { text-align: left; padding: 12px; border-bottom: 1px solid #e2e8f0; } th { background: #f8fafc; }
-    .hidden { display: none; } .muted { color: #64748b; }
+    :root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: #1b315f; background: #f4f7fb; }
+    body { min-height: 100vh; margin: 0; background: linear-gradient(180deg, #eaf1fb 0, #f4f7fb 260px); }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 10px max(24px, calc((100% - 1100px)/2)); background: #12347a; box-shadow: 0 4px 16px #12347a2b; }
+    .admin-brand { display: block; width: 145px; height: 62px; object-fit: contain; }
+    .admin-back { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px; border: 1px solid #ffffff70; border-radius: 999px; color: #fff; background: #ffffff16; font-size: .92rem; font-weight: 700; text-decoration: none; transition: background-color .18s ease, border-color .18s ease; }
+    .admin-back:hover { color: #12347a; background: #fff; border-color: #fff; }
+    .admin-back:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #8bb5ff; outline-offset: 3px; }
+    main { width: min(1100px, 100% - 40px); margin: 42px auto; }
+    .card { margin-bottom: 22px; padding: 28px; border: 1px solid #dce5f0; border-radius: 18px; background: #fff; box-shadow: 0 8px 28px #1b315f12; }
+    #loginCard { max-width: 540px; margin: min(9vh, 90px) auto; border-top: 4px solid #3478d4; }
+    h1, h2 { margin: 0 0 10px; color: #12347a; line-height: 1.25; }
+    h1 { font-size: clamp(1.5rem, 3vw, 1.9rem); }
+    h2 { font-size: 1.3rem; }
+    p { line-height: 1.6; }
+    label { display: block; margin: 20px 0 8px; font-size: .94rem; font-weight: 700; }
+    input { display: block; width: 100%; padding: 13px 14px; border: 1px solid #cbd5e1; border-radius: 10px; color: #1b315f; background: #fbfdff; font: inherit; }
+    input:focus { border-color: #3478d4; box-shadow: 0 0 0 4px #3478d426; outline: 0; }
+    button { margin: 12px 8px 0 0; padding: 11px 18px; border: 0; border-radius: 10px; color: #fff; background: #2864b5; font: inherit; font-weight: 700; cursor: pointer; transition: background-color .18s ease, box-shadow .18s ease; }
+    button:hover { background: #1c4e98; box-shadow: 0 4px 12px #12347a24; }
+    button.secondary { color: #12347a; background: #eaf1fb; }
+    button.secondary:hover { background: #dce8f8; box-shadow: none; }
+    .message { min-height: 1.2em; margin-bottom: 0; color: #b42318; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+    .stat { padding: 18px; border: 1px solid #e1eaf5; border-radius: 13px; color: #52627a; background: #f6f9fe; font-size: .92rem; font-weight: 600; }
+    .stat strong { display: block; margin-top: 8px; color: #12347a; font-size: 2rem; line-height: 1; }
+    .stat strong[hidden] { display: none; }
+    .stat .count-toggle { margin: 12px 0 0; padding: 8px 10px; font-size: .78rem; }
+    .table-wrap { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; background: #fff; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid #e8edf4; text-align: left; }
+    th { color: #12347a; background: #f2f6fc; font-size: .88rem; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #f8fbff; }
+    .hidden { display: none; }
+    .muted { margin: 0; color: #64748b; }
+    @media (max-width: 600px) {
+      .admin-header { min-height: 72px; padding: 8px 16px; }
+      .admin-brand { width: 118px; height: 52px; }
+      .admin-back { gap: 6px; padding: 9px 12px; font-size: .84rem; }
+      main { width: calc(100% - 28px); margin: 24px auto; }
+      .card { padding: 21px; border-radius: 15px; }
+    }
   </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<header><strong>ExpeRT · Administração</strong><a href="index.html">Voltar ao início</a></header>
+<header class="admin-header"><a href="index.html" aria-label="ExpeRT, página inicial"><img class="admin-brand" src="imagens/logo.png" alt="ExpeRT Plataforma"></a><a class="admin-back" href="index.html"><i class="bi bi-arrow-left" aria-hidden="true"></i> Voltar ao início</a></header>
 <main>
   <section class="card" id="loginCard">
     <h1>Acesso administrativo</h1>
@@ -49,6 +79,7 @@
       <div class="stat">Discentes<strong id="totalStudents">0</strong></div>
       <div class="stat">Outros<strong id="totalOthers">0</strong></div>
       <div class="stat">Docentes com instituição<strong id="totalInstitutions">0</strong></div>
+      <div class="stat">Cliques no link para baixar o projeto<button class="secondary count-toggle" id="downloadCountToggle" type="button" aria-expanded="false" aria-controls="downloadClicks">Mostrar total</button><strong id="downloadClicks" hidden>0</strong></div>
     </div>
     <div id="tables"></div>
   </section>
@@ -96,6 +127,7 @@
       document.getElementById('totalStudents').textContent = data.discentes;
       document.getElementById('totalOthers').textContent = data.outros;
       document.getElementById('totalInstitutions').textContent = data.docentesComInstituicao;
+      document.getElementById('downloadClicks').textContent = data.downloadClicks ?? 0;
       const container = document.getElementById('tables');
       container.replaceChildren();
       for (const group of groups) {
@@ -135,7 +167,19 @@
   function logout() {
     adminToken = ''; dashboard.classList.add('hidden'); loginCard.classList.remove('hidden');
     document.getElementById('adminPassword').value = ''; document.getElementById('tables').replaceChildren();
+    document.getElementById('downloadClicks').hidden = true;
+    const countToggle = document.getElementById('downloadCountToggle');
+    countToggle.textContent = 'Mostrar total';
+    countToggle.setAttribute('aria-expanded', 'false');
   }
+  document.getElementById('downloadCountToggle').addEventListener('click', () => {
+    const count = document.getElementById('downloadClicks');
+    count.hidden = !count.hidden;
+    const isVisible = !count.hidden;
+    const button = document.getElementById('downloadCountToggle');
+    button.textContent = isVisible ? 'Ocultar total' : 'Mostrar total';
+    button.setAttribute('aria-expanded', String(isVisible));
+  });
   document.getElementById('refreshButton').addEventListener('click', loadUsers);
   document.getElementById('logoutButton').addEventListener('click', logout);
 </script>

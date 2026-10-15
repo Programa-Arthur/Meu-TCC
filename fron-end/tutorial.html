@@ -7,45 +7,52 @@
   <link rel="stylesheet" href="lindo.css">
   <style>
     .tutorial-main { max-width: 1000px; margin: 3rem auto; padding: 0 1.5rem; }
-    .tutorial-hero { padding: 2.5rem; border-radius: 16px; color: white; background: linear-gradient(115deg, #1c438f, #102b68); }
+    .tutorial-hero { padding: 2.5rem; border: 1px solid #ffffff20; border-radius: 18px; color: white; background: linear-gradient(115deg, #1c438f, #102b68); box-shadow: 0 12px 30px rgba(18,52,122,.16); }
     .tutorial-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: .75rem; }
-    .tutorial-hero p { max-width: 760px; }
-    .tutorial-card { margin-top: 1.5rem; padding: 2rem; border-radius: 14px; background: var(--bg-card); color: var(--text-dark); box-shadow: 0 4px 14px rgba(27,49,95,.08); }
-    .tutorial-card h2 { color: var(--text-card); margin-bottom: .75rem; }
+    .tutorial-hero p { max-width: 760px; margin-bottom: 0; color: rgba(255,255,255,.86); font-size: 1.05rem; }
+    .tutorial-card { margin-top: 1.35rem; padding: 2rem; border: 1px solid #e1e8f1; border-radius: 16px; background: var(--bg-card); color: var(--text-dark); box-shadow: 0 6px 20px rgba(27,49,95,.07); }
+    .tutorial-card h2 { color: var(--text-card); margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #e7edf5; font-size: 1.35rem; }
     .tutorial-card h3 { color: var(--text-card); margin: 1.25rem 0 .4rem; }
-    .tutorial-card p, .tutorial-card li { color: var(--text-card-muted); }
+    .tutorial-card p, .tutorial-card li { color: var(--text-card-muted); line-height: 1.7; }
+    .tutorial-card strong { color: #12347a; font-weight: 800; }
     .tutorial-card p + p { margin-top: .7rem; }
-    .tutorial-card ol, .tutorial-card ul { padding-left: 1.4rem; }
-    .tutorial-card li + li { margin-top: .4rem; }
-    .notice { margin-top: 1rem; padding: 1rem 1.2rem; border-left: 4px solid #e6a700; background: #fff8df; border-radius: 8px; color: #594500; }
-    .command { margin: .8rem 0; padding: 1rem; overflow-x: auto; border-radius: 8px; background: #10213c; color: #e9f3ff; font-family: monospace; }
+    .tutorial-card ol, .tutorial-card ul { padding-left: 1.5rem; }
+    .tutorial-card li + li { margin-top: .55rem; }
+    .notice { margin-top: 1.2rem; padding: 1rem 1.2rem; border: 1px solid #f1dc9b; border-left: 4px solid #e6a700; background: #fff9e8; border-radius: 10px; color: #594500; line-height: 1.65; }
+    .notice strong { color: #7a4b00; }
     .sensor-table-wrap { overflow-x: auto; margin-top: 1rem; }
     .sensor-table { width: 100%; min-width: 620px; border-collapse: collapse; }
-    .sensor-table th, .sensor-table td { padding: .8rem; border-bottom: 1px solid #e2e8f0; text-align: left; }
-    .sensor-table th { background: #f0f6ff; color: #1b315f; }
+    .sensor-table th, .sensor-table td { padding: .85rem; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    .sensor-table th { background: #edf4ff; color: #1b315f; font-size: .9rem; }
+    .sensor-table tbody tr:nth-child(even) { background: #f8faff; }
+    .sensor-table tbody tr:last-child td { border-bottom: 0; }
+    .tutorial-card code { padding: .12rem .35rem; border-radius: 5px; color: #173f83; background: #edf4ff; }
     .tutorial-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; }
-    .download-card { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
-    .download-card p { max-width: 610px; }
-    @media (max-width: 600px) { .tutorial-hero, .tutorial-card { padding: 1.4rem; } }
+    .download-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2rem; align-items: center; }
+    .download-card h3 { margin-top: 0; }
+    .download-card p { max-width: 620px; margin-bottom: 0; }
+    .download-card .btn-animado { justify-self: end; white-space: nowrap; }
+    @media (max-width: 760px) { .download-card { grid-template-columns: 1fr; gap: 1rem; } .download-card .btn-animado { justify-self: start; } }
+    @media (max-width: 600px) { .tutorial-main { margin: 1.5rem auto; padding: 0 1rem; } .tutorial-hero, .tutorial-card { padding: 1.35rem; } .tutorial-card h2 { font-size: 1.15rem; } .download-card .btn-animado { justify-self: stretch; text-align: center; white-space: normal; } }
   </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
   <header class="site-header">
     <div id="logo-container"><a href="index.html" aria-label="ExpeRT, página inicial"><img class="brand-image" src="imagens/logo.png" alt="ExpeRT Plataforma"></a></div>
-    <nav id="header-buttons"><a class="btn-header" href="index.html">Início</a><a class="btn-header" href="login.html">Login</a></nav>
+    <nav id="header-buttons"><a class="btn-header" href="index.html">Início</a><a class="btn-header" id="loginNav" href="login.html">Login</a></nav>
   </header>
   <main class="tutorial-main">
     <section class="tutorial-hero">
       <h1>Como usar a Plataforma ExpeRT</h1>
       <p>Conecte o Arduino por USB, abra a plataforma e acompanhe as leituras dos sensores em tabelas ou gráficos. A plataforma procura automaticamente uma porta serial compatível.</p>
     </section>
-      <div class="download-card" style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e2e8f0;">
+    <section class="tutorial-card download-card" aria-labelledby="download-title">
         <div>
-          <h3>Arquivo do projeto</h3>
-          <p>O ZIP é destinado a quem deseja instalar dependências, desenvolver ou gerar o aplicativo em outro sistema operacional.</p>
+          <h3 id="download-title">Arquivo do projeto</h3>
+          <p>O código-fonte está no GitHub. Abra o repositório e escolha <strong>Code &gt; Download ZIP</strong> para baixar os arquivos. Para executar o projeto, o computador precisa ter Node.js e npm instalados.</p>
         </div>
-        <a class="btn-animado" href="downloads/plataforma-expert.zip" download>Baixar código-fonte (.zip)</a>
-      </div>
+        <a class="btn-animado" href="/download/project" target="_blank" rel="noopener noreferrer">Acessar repositório</a>
     </section>
 
     <section class="tutorial-card" aria-labelledby="connection-title">
@@ -56,26 +63,11 @@
         <li>Conecte o Arduino ao computador com um cabo USB que transmita dados. Aguarde o sistema reconhecer a porta serial.</li>
         <li>Feche o Monitor Serial da Arduino IDE e outros programas que possam estar usando a porta. Só um programa pode controlar a porta serial de cada vez.</li>
       </ol>
-      <div class="notice"><strong>Importante:</strong> o ZIP disponibilizado aqui contém a aplicação da plataforma, mas não inclui o sketch do Arduino nem um mapa de pinos dos circuitos. Por isso, use o esquema e o firmware fornecidos para o seu kit; não escolha os pinos por tentativa. Motores podem precisar de driver e fonte externa: não os alimente diretamente pelos pinos do Arduino.</div>
-    </section>
-
-    <section class="tutorial-card" aria-labelledby="start-title">
-      <h2 id="start-title">2. Instalar e abrir</h2>
-      <p>O projeto baixado é o código-fonte da aplicação. Ele requer Node.js e npm instalados no computador.</p>
-      <ol>
-        <li>Extraia o ZIP e abra um terminal na pasta extraída <code>plataforma-expert0</code>.</li>
-        <li>Instale as dependências:</li>
-      </ol>
-      <pre class="command">npm install</pre>
-      <p>Para abrir a versão desktop, execute:</p>
-      <pre class="command">npm start</pre>
-      <p>Ou, para iniciar o servidor e usar pelo navegador:</p>
-      <pre class="command">npm run start:server</pre>
-      <p>Depois acesse <code>http://localhost:3000</code>. No Linux, se o sistema negar acesso à porta serial, ajuste as permissões do dispositivo serial para o seu usuário.</p>
+      <div class="notice"><strong>Importante:</strong> o repositório contém o código-fonte da aplicação, mas não inclui o sketch do Arduino nem um mapa de pinos dos circuitos. Por isso, use o esquema e o firmware fornecidos para o seu kit; não escolha os pinos por tentativa. Motores podem precisar de driver e fonte externa: não os alimente diretamente pelos pinos do Arduino.</div>
     </section>
 
     <section class="tutorial-card" aria-labelledby="use-title">
-      <h2 id="use-title">3. Escolher um sensor e iniciar uma leitura</h2>
+      <h2 id="use-title">2. Escolher um sensor e iniciar uma leitura</h2>
       <ol>
         <li>Na tela <strong>Usar Dispositivos</strong>, selecione o card do componente montado no Arduino.</li>
         <li>Escolha <strong>Tabela</strong> para acompanhar o valor atual ou <strong>Gráfico</strong> para visualizar a variação ao longo do tempo.</li>
@@ -87,7 +79,7 @@
     </section>
 
     <section class="tutorial-card" aria-labelledby="devices-title">
-      <h2 id="devices-title">4. Sensores e atuadores disponíveis</h2>
+      <h2 id="devices-title">3. Sensores e atuadores disponíveis</h2>
       <p>A plataforma associa cada card a um canal de comunicação com o firmware do Arduino. As leituras e unidades abaixo são as descritas pela própria aplicação.</p>
       <div class="sensor-table-wrap">
         <table class="sensor-table">
@@ -113,5 +105,14 @@
     </div>
   </main>
   <footer><p>&copy; 2026 ExpeRT Plataforma — Instituto Federal Catarinense (Campus Sombrio)</p></footer>
+  <script>
+    try {
+      if (localStorage.getItem('usuario_logado')) {
+        document.getElementById('loginNav').hidden = true;
+      }
+    } catch (error) {
+      // Mantém o link de login disponível se o navegador bloquear o armazenamento local.
+    }
+  </script>
 </body>
 </html>

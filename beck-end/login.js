@@ -99,6 +99,7 @@ const database = client.db(
 const users = database.collection(
   environment.MONGODB_USERS_COLLECTION || 'users'
 );
+const downloadStats = database.collection('downloadStats');
 
 
 // ======================================================
@@ -671,6 +672,7 @@ async function listAdminUsers(request, response) {
     const usersList = await users.find({}, {
       projection: { name: 1, email: 1, type: 1, institution: 1, createdAt: 1 }
     }).sort({ createdAt: -1 }).toArray();
+    const downloadInfo = await downloadStats.findOne({ _id: 'project-repository' });
     const safeUsers = usersList.map((user) => ({
       name: user.name,
       email: user.email,
@@ -687,11 +689,32 @@ async function listAdminUsers(request, response) {
       discentes: discentes.length,
       outros: outros.length,
       docentesComInstituicao: docentes.filter((user) => user.institution.linked).length,
+      downloadClicks: downloadInfo?.count || 0,
       users: safeUsers
     });
   } catch (error) {
     console.error('Falha ao listar usuários:', error.message);
     return sendJson(response, 500, { mensagem: 'Não foi possível carregar os usuários.' });
+  }
+}
+
+async function redirectToProjectRepository(response) {
+  try {
+    await downloadStats.updateOne(
+      { _id: 'project-repository' },
+      { $inc: { count: 1 }, $set: { updatedAt: new Date() } },
+      { upsert: true }
+    );
+    response.writeHead(302, {
+      Location: 'https://github.com/bs-laurao/plataforma-expert',
+      'Cache-Control': 'no-store'
+    });
+    return response.end();
+  } catch (error) {
+    console.error('Falha ao registrar acesso ao repositório:', error.message);
+    return sendJson(response, 500, {
+      mensagem: 'Não foi possível abrir o repositório agora.'
+    });
   }
 }
 
@@ -767,6 +790,9 @@ const server =
       }
       if (request.method === 'GET' && url.pathname === '/api/admin/users') {
         return listAdminUsers(request, response);
+      }
+      if (request.method === 'GET' && url.pathname === '/download/project') {
+        return redirectToProjectRepository(response);
       }
 
 
